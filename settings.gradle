@@ -1,1 +1,1 @@
-include ':app', ':timeflowmgr-biz', ':timeflowmgr-api', ':lego'
+include ':app', ':timeflowmgr-biz', ':timeflowmgr-api', ':lego', ':res-biz'
