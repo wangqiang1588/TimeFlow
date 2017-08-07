@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mobibrw.timeflowmgr.biz.Adapter.TimeFlowMgrAdapter;
+import com.mobibrw.timeflowmgr.biz.View.FloatingActionButtonContainerView;
 
 public class TimeFlowMgrActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -26,7 +27,7 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButtonContainerView fab = (FloatingActionButtonContainerView) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
