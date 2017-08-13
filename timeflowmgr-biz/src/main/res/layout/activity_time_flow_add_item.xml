@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mobibrw.timeflowmgr.biz.Activity.TimeFlowAddItemActivity">
+
+    <TextView
+        android:layout_marginTop="@dimen/default_item_margin"
+        android:id="@+id/txtCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timeflow_add_item_content" />
+
+    <EditText
+        android:id="@+id/editContent"
+        android:layout_marginTop="@dimen/default_item_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/add_item_content_min_height"
+        android:ems="10"
+        android:layout_below="@+id/txtCaption"
+        android:layout_centerHorizontal="true"
+        android:inputType="textMultiLine" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_below="@+id/editContent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/default_item_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/timeflow_add_item_commit" />
+
+</RelativeLayout>

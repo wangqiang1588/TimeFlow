@@ -6,4 +6,6 @@
 
     <string name="action_settings">设置</string>
     <string name="btn_remove_caption">移除</string>
+    <string name="timeflow_add_item_content">内容:</string>
+    <string name="timeflow_add_item_commit">添加</string>
 </resources>

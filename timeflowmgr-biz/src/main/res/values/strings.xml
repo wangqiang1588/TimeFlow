@@ -6,4 +6,6 @@
     <string name="action_settings">Settings</string>
 
     <string name="btn_remove_caption">Remove</string>
+    <string name="timeflow_add_item_content">Content:</string>
+    <string name="timeflow_add_item_commit">Commit</string>
 </resources>
