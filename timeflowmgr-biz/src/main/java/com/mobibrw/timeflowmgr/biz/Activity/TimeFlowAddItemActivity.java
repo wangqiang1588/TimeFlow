@@ -28,10 +28,11 @@ public class TimeFlowAddItemActivity extends AppCompatActivity {
 
     private void setAndSaveTimeFlowItems(){
         final EditText editText = (EditText)findViewById(R.id.editContent);
-        final String strContent = editText.getText().toString();
-        if((null == strContent) || (strContent.length() <= 0 )){
-            Toast.makeText(this.getBaseContext(),this.getString(R.string.action_settings),Toast.LENGTH_SHORT).show();
+        String strContent = editText.getText().toString();
+        if((null == strContent) || (strContent.trim().length() <= 0 )){
+            Toast.makeText(this.getBaseContext(),this.getString(R.string.content_is_empty),Toast.LENGTH_SHORT).show();
         }else {
+            strContent = strContent.trim();
             final DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
             final int year = datePicker.getYear();
             final int month = datePicker.getMonth();
@@ -39,6 +40,7 @@ public class TimeFlowAddItemActivity extends AppCompatActivity {
             final TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
             final int hour = timePicker.getCurrentHour();
             final int minute = timePicker.getCurrentMinute();
+
             TimeFlowAddItemActivity.this.finish();
         }
     }

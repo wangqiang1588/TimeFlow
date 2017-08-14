@@ -8,4 +8,5 @@
     <string name="btn_remove_caption">移除</string>
     <string name="timeflow_add_item_content">内容:</string>
     <string name="timeflow_add_item_commit">添加</string>
+    <string name="content_is_empty">请输入内容</string>
 </resources>

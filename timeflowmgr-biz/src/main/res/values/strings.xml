@@ -8,4 +8,5 @@
     <string name="btn_remove_caption">Remove</string>
     <string name="timeflow_add_item_content">Content:</string>
     <string name="timeflow_add_item_commit">Commit</string>
+    <string name="content_is_empty">Please Input Content Message</string>
 </resources>
