@@ -10,4 +10,5 @@
     <dimen name="time_item_fontsize">22dp</dimen>
     <dimen name="add_item_content_min_height">100dp</dimen>
     <dimen name="default_item_margin">2dp</dimen>
+    <dimen name="default_add_time_item_bottom_margin">50dp</dimen>
 </resources>
