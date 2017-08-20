@@ -54,7 +54,7 @@ public class TimeFlowMgrAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return 5;
     }
 
     @Override

@@ -1,14 +1,17 @@
 package com.mobibrw.persist.biz;
 
+import android.support.annotation.NonNull;
+
+import com.mobibrw.lego.ILego;
 import com.mobibrw.lego.LegoBizBundle;
 
 /**
  * Created by longsky on 2017/8/14.
  */
 
-public class PersistBiz extends LegoBizBundle {
+public class PersistBizBu extends LegoBizBundle {
     @Override
-    protected void onBundleCreate() {
+    protected void onBundleCreate(@NonNull final ILego lego) {
 
     }
 
