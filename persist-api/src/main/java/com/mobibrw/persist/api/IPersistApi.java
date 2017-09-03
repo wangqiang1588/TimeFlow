@@ -5,7 +5,13 @@ package com.mobibrw.persist.api;
  */
 
 public interface IPersistApi {
-    void persistTimeItem(String content);
-    void removeTimeItem(String id);
-    void coverTimeItem(String id,String content);
+    String persistTimeItem(final String content,final String gmt);
+    void removeTimeItem(final String id);
+    void coverTimeItem(final String id,final String content);
+    long getTimeItemsCount();
+
+    TimeInfo getTimeInfoByOffset(int offset);
+
+    boolean registerPersistListener(final IPersistListener l);
+    void unRegisterPersistListener(final IPersistListener l);
 }

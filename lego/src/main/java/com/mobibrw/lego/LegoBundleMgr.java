@@ -6,7 +6,9 @@ import com.mobibrw.utils.LogEx;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.ListIterator;
 
 /**
  * Created by longsky on 2017/8/20.
@@ -18,14 +20,39 @@ public final class LegoBundleMgr implements ILegoMgr {
         return this.getClass().getSimpleName();
     }
 
-    public LegoBundleMgr(@NonNull final ILego lego){
+    public LegoBundleMgr(@NonNull final ILego lego, @NonNull final ArrayList<String> bundles){
         this.lego = lego;
+        mBundleNames.clear();
+        mBundleNames.addAll(bundles);
     }
 
     @Override
     public LegoBundle getBundle(@NonNull final String name) {
         final LegoBundle legoBundle = mBundles.get(name);
         return legoBundle;
+    }
+
+    public void onLegoApplicationCreate() {
+        do {
+            for (String name : mBundleNames) {
+                final boolean bSuccess = loadOneBundle(name);
+                if (!bSuccess) {
+                    LogEx.e(tag(),"load bundle \"" + name +"\" failed!");
+                }
+            }
+        } while (false);
+    }
+
+    public void onLegoApplicationTerminate() {
+        final ListIterator<LinkedHashMap.Entry<String, LegoBundle>> bundles = new ArrayList<>(mBundles.entrySet()).listIterator(mBundles.size());
+        while (bundles.hasPrevious()) {
+            final LinkedHashMap.Entry<String, LegoBundle> element = bundles.previous();
+            final String bundleName = element.getKey();
+            final LegoBundle legoBundle = element.getValue();
+            legoBundle.onBundleDestroy();
+            mBundles.remove(bundleName);
+        }
+        mBundles.clear();
     }
 
 
@@ -42,10 +69,10 @@ public final class LegoBundleMgr implements ILegoMgr {
 
                 final Class<? extends LegoBundle> cls = this.lego.getLegoContext().getClassLoader().loadClass(name).asSubclass(LegoBundle.class);
 
-                final Constructor<? extends LegoBundle> constructor = cls.getDeclaredConstructor(String.class);
+                final Constructor<? extends LegoBundle> constructor = cls.getDeclaredConstructor();
                 constructor.setAccessible(true);
 
-                final LegoBundle bundle = constructor.newInstance(name);
+                final LegoBundle bundle = constructor.newInstance();
 
                 mBundles.put(name, bundle);
 
@@ -75,6 +102,7 @@ public final class LegoBundleMgr implements ILegoMgr {
         return bSuccess;
     }
 
-    private ILego lego;
+    private final ILego lego;
     private final LinkedHashMap<String, LegoBundle> mBundles = new LinkedHashMap<>();
+    private final ArrayList<String> mBundleNames = new ArrayList<>();
 }

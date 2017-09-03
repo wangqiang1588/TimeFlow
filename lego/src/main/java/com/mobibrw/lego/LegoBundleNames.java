@@ -6,4 +6,5 @@ package com.mobibrw.lego;
 
 public final class LegoBundleNames {
     public static final String PersistBizBu = "com.mobibrw.persist.biz.PersistBizBu";
+    public static final String PersistApiBu = "com.mobibrw.persist.api.PersistApiBu";
 }

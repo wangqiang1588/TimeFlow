@@ -27,5 +27,8 @@ dependencies {
     compile project(':lego')
     compile project(':res-biz')
     compile project(':timeflowmgr-biz')
+    compile project(':persist-biz')
+    compile project(':persist-api')
+    compile project(':utils')
     testCompile 'junit:junit:4.12'
 }

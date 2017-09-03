@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.mobibrw.persist.api.PersistApiBu;
+import com.mobibrw.persist.api.TimeInfo;
 import com.mobibrw.timeflowmgr.biz.R;
 
 /**
@@ -54,17 +56,18 @@ public class TimeFlowMgrAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        long count = PersistApiBu.api().getTimeItemsCount();
+        return Long.valueOf(count).intValue();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return PersistApiBu.api().getTimeInfoByOffset(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -83,9 +86,12 @@ public class TimeFlowMgrAdapter implements ListAdapter {
         if(null == holder){
             holder = new ViewHolder();
             holder.txtCaption = (TextView) view.findViewById(R.id.txtCaption);
+            TimeInfo info = PersistApiBu.api().getTimeInfoByOffset(i);
+            holder.info = info;
             view.setTag(holder);
         }
-        holder.txtCaption.setText("hello");
+
+        holder.txtCaption.setText(holder.info.getContent());
         return view;
     }
 
@@ -106,5 +112,6 @@ public class TimeFlowMgrAdapter implements ListAdapter {
 
     private static class ViewHolder {
         public TextView txtCaption;
+        public TimeInfo info;
     }
 }

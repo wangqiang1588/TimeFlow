@@ -10,7 +10,7 @@ import com.mobibrw.lego.LegoBundleNames;
  * Created by longsky on 2017/8/14.
  */
 
-public class PersistApiBu extends LegoApiBundle {
+public final class PersistApiBu extends LegoApiBundle {
 
     @Override
     protected void onBundleCreate(@NonNull final ILego lego) {

@@ -28,5 +28,7 @@ dependencies {
     })
     compile project(':lego')
     compile 'com.android.support:appcompat-v7:26.+'
+    compile 'org.litepal.android:core:1.6.0'
     testCompile 'junit:junit:4.12'
+    compile project(path: ':persist-api')
 }

@@ -9,17 +9,18 @@ import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.support.design.widget.FloatingActionButton;
-//import android.support.design.widget.Snackbar;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mobibrw.persist.api.IPersistListener;
+import com.mobibrw.persist.api.PersistApiBu;
 import com.mobibrw.timeflowmgr.biz.Adapter.TimeFlowMgrAdapter;
 import com.mobibrw.timeflowmgr.biz.R;
 
 public class TimeFlowMgrActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener,IPersistListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,9 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ListViewCompat listTimeFlow = (ListViewCompat)findViewById(R.id.timeflowlst);
+        listTimeFlow = (ListViewCompat)findViewById(R.id.timeflowlst);
         listTimeFlow.setAdapter(new TimeFlowMgrAdapter(this));
+        PersistApiBu.api().registerPersistListener(this);
     }
 
     @Override
@@ -111,4 +113,16 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onPersistMessageChanged() {
+        listTimeFlow.deferNotifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        PersistApiBu.api().unRegisterPersistListener(this);
+        super.onDestroy();
+    }
+
+    private ListViewCompat listTimeFlow;
 }

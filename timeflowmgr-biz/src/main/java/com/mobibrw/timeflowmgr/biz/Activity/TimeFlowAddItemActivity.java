@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.mobibrw.persist.api.PersistApiBu;
 import com.mobibrw.timeflowmgr.biz.R;
+import com.mobibrw.utils.TimeUtils;
 
 public class TimeFlowAddItemActivity extends AppCompatActivity {
 
@@ -40,7 +42,8 @@ public class TimeFlowAddItemActivity extends AppCompatActivity {
             final TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
             final int hour = timePicker.getCurrentHour();
             final int minute = timePicker.getCurrentMinute();
-
+            final String gmt =  TimeUtils.getGMT(year,month,day,hour,minute);
+            PersistApiBu.api().persistTimeItem(strContent,gmt);
             TimeFlowAddItemActivity.this.finish();
         }
     }
