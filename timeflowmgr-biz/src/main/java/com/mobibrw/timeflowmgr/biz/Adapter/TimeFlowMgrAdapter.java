@@ -1,11 +1,10 @@
 package com.mobibrw.timeflowmgr.biz.Adapter;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.mobibrw.persist.api.PersistApiBu;
@@ -16,7 +15,7 @@ import com.mobibrw.timeflowmgr.biz.R;
  * Created by longsky on 2017/7/15.
  */
 
-public class TimeFlowMgrAdapter implements ListAdapter {
+public class TimeFlowMgrAdapter extends BaseAdapter {
 
     private Context ctx;
     private LayoutInflater inflater;
@@ -35,26 +34,6 @@ public class TimeFlowMgrAdapter implements ListAdapter {
     }
 
     @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled(int i) {
-        return false;
-    }
-
-    @Override
-    public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-
-    }
-
-    @Override
     public int getCount() {
         long count = PersistApiBu.api().getTimeItemsCount();
         return Long.valueOf(count).intValue();
@@ -68,11 +47,6 @@ public class TimeFlowMgrAdapter implements ListAdapter {
     @Override
     public long getItemId(int i) {
         return i;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
     }
 
     @Override
@@ -93,21 +67,6 @@ public class TimeFlowMgrAdapter implements ListAdapter {
 
         holder.txtCaption.setText(holder.info.getContent());
         return view;
-    }
-
-    @Override
-    public int getItemViewType(int i) {
-        return 0;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 1;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
     }
 
     private static class ViewHolder {

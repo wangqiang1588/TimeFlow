@@ -51,8 +51,9 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        listTimeFlow = (ListViewCompat)findViewById(R.id.timeflowlst);
-        listTimeFlow.setAdapter(new TimeFlowMgrAdapter(this));
+        ListViewCompat listTimeFlow = (ListViewCompat)findViewById(R.id.timeflowlst);
+        timeFlowMgrAdapter = new TimeFlowMgrAdapter(this);
+        listTimeFlow.setAdapter(timeFlowMgrAdapter);
         PersistApiBu.api().registerPersistListener(this);
     }
 
@@ -115,7 +116,7 @@ public class TimeFlowMgrActivity extends AppCompatActivity
 
     @Override
     public void onPersistMessageChanged() {
-        listTimeFlow.deferNotifyDataSetChanged();
+        timeFlowMgrAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -124,5 +125,5 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         super.onDestroy();
     }
 
-    private ListViewCompat listTimeFlow;
+    private TimeFlowMgrAdapter timeFlowMgrAdapter;
 }
