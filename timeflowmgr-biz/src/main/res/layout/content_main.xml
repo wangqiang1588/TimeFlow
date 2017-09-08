@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mobibrw.timeflowmgr.biz.Activity.TimeFlowMgrActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/app_bar_main"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.ListViewCompat
+    <com.mobibrw.timeflowmgr.biz.View.SwipeTimeFlowListView
         android:id="@+id/timeflowlst"
+        swipe:swipeBackView="@+id/id_back"
+        swipe:swipeCloseAllItemsWhenMoveList="true"
+        swipe:swipeFrontView="@+id/id_front"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
