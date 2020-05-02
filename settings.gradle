@@ -1,1 +1,1 @@
-include ':app', ':timeflowmgr-biz', ':timeflowmgr-api', ':lego', ':res-biz', ':persist-biz', ':persist-api', ':utils', ':lib-ui'
+include ':app', ':timeflowmgr-biz', ':timeflowmgr-api', ':lego', ':res-biz', ':persist-biz', ':persist-api', ':utils', ':libui'
