@@ -23,7 +23,6 @@ import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewConfigurationCompat;
-import android.support.v7.widget.ListViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,7 +38,7 @@ import java.util.List;
 /**
  * ListView subclass that provides the swipe functionality
  */
-public class SwipeListView extends ListViewCompat {
+public class SwipeListView extends ListView {
     
     /**
      * log tag
