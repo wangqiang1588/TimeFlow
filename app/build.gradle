@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion rootProject.ext.buildConf.compSdkVer
+    buildToolsVersion rootProject.ext.buildConf.buildToolsVer
+
     defaultConfig {
         applicationId "com.mobibrw.timeflow"
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.buildConf.minSdkVer
+        targetSdkVersion rootProject.ext.buildConf.targetSdkVer
+        versionCode rootProject.ext.buildConf.verCode
+        versionName rootProject.ext.buildConf.verName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -21,9 +22,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation ('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestImplementation rootProject.ext.depLibs.espresso_core
     implementation project(':lego')
     implementation project(':res-biz')
     implementation project(':timeflowmgr-biz')
@@ -31,6 +30,6 @@ dependencies {
     implementation project(':persist-api')
     implementation project(':utils')
     implementation project(':lib-ui')
-    implementation 'com.android.support:support-annotations:28.0.0'
-    testImplementation 'junit:junit:4.12'
+    implementation rootProject.ext.depLibs.sup_annotations
+    testImplementation rootProject.ext.depLibs.junit
 }
