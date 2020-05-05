@@ -6,12 +6,14 @@ import com.mobibrw.lego.ILego;
 import com.mobibrw.lego.SimpleLegoBizBundle;
 import com.mobibrw.persist.api.IPersistApi;
 import com.mobibrw.persist.api.IPersistListener;
-import com.mobibrw.persist.api.TimeInfo;
+import com.mobibrw.persist.api.TimeFlowCase;
 import com.mobibrw.utils.ListenerManager;
 
+import org.litepal.FluentQuery;
 import org.litepal.LitePal;
 import org.litepal.LitePalDB;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +22,20 @@ import java.util.List;
 
 class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPersistApi {
 
+    private TimeFlowCase transFromTimeFlowPersistCase(TimeFlowPersistCase persistCase) {
+        final TimeFlowCase tfCase = new TimeFlowCase();
+        tfCase.setKey(persistCase.getKey());
+        tfCase.setContent(persistCase.getContent());
+        tfCase.setGmt(persistCase.getGmt());
+        tfCase.setModified(persistCase.getModified());
+        return tfCase;
+    }
+
     @Override
     protected void onBundleCreate(@NonNull final ILego lego) {
         LitePal.initialize(lego.getLegoContext());
-        LitePalDB litePalDB = new LitePalDB(this.defaultDatabaseName, this.defaultDatabaseVer);
-        litePalDB.addClassName(TimeItem.class.getName());
+        final LitePalDB litePalDB = new LitePalDB(this.defaultDatabaseName, this.defaultDatabaseVer);
+        litePalDB.addClassName(TimeFlowPersistCase.class.getName());
         LitePal.use(litePalDB);
     }
 
@@ -34,13 +45,16 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
     }
 
     @Override
-    public String persistTimeItem(final String content,final String gmt) {
-        TimeItem item = new TimeItem();
-        item.setContent(content);
-        item.setGmt(gmt);
-        item.save();
+    public boolean persistTimeFlowCase(final String key, final String content, final String modifyTime, final String gmt) {
+        final TimeFlowPersistCase tfCase = new TimeFlowPersistCase();
+        tfCase.setKey(key);
+        tfCase.setContent(content);
+        tfCase.setGmt(gmt);
+        tfCase.setState(TimeFlowPersistCase.TIME_FLOW_PERSIST_CASE_STATE_ACTIVE);
+        tfCase.setModified(modifyTime);
+        final boolean success = tfCase.save();
         broadcastPersistBizChanged();
-        return "" + item.getRecordId();
+        return success;
     }
 
     private void postPersistBizChangedOnMainThread(final IPersistListener l) {
@@ -63,29 +77,47 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
     }
 
     @Override
-    public void removeTimeItem(final String id) {
+    public void removeTimeFlowCase(final String key) {
 
     }
 
     @Override
-    public void coverTimeItem(final String id, final String content) {
-
+    public long loadTimeFlowCaseLength() {
+        return LitePal.count(TimeFlowPersistCase.class);
     }
 
     @Override
-    public long getTimeItemsCount() {
-        return DataSupportEx.count(TimeItem.class);
+    public boolean isTimeFlowCaseKeyExists(final String key) {
+        final List<TimeFlowPersistCase> persistCases = LitePal.where("key=?", key).limit(1).find(TimeFlowPersistCase.class);
+        return persistCases.size() > 0;
     }
 
     @Override
-    public TimeInfo getTimeInfoByOffset(int offset) {
-        List<TimeItem> items = DataSupportEx.order("id desc").offset(offset).limit(1).find(TimeItem.class);
-        if((null != items)&& (items.size() > 0)){
-            TimeItem item = items.get(0);
-            TimeInfo info = new TimeInfo();
-            info.setId(item.getRecordId());
-            info.setContent(item.getContent());
-            return info;
+    public ArrayList<TimeFlowCase> loadCompleteTimeFlowCases(final int limit) {
+        final ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
+        final FluentQuery fluentQuery = LitePal.order("id desc");
+        fluentQuery.max(TimeFlowPersistCase.class,"id", int.class);
+        fluentQuery.where("state=? group by key", TimeFlowPersistCase.TIME_FLOW_PERSIST_CASE_STATE_ACTIVE);
+        if(TIME_FLOW_LOAD_LIMIT_NONE != limit) {
+            fluentQuery.limit(limit);
+        }
+        final List<TimeFlowPersistCase> persistResCases = fluentQuery.find(TimeFlowPersistCase.class);
+        if((null != persistResCases)&& (persistResCases.size() > 0)) {
+            for(TimeFlowPersistCase persistCase : persistResCases) {
+                final TimeFlowCase tfCase = transFromTimeFlowPersistCase(persistCase);
+                timeFlowCases.add(tfCase);
+            }
+        }
+        return timeFlowCases;
+    }
+
+    @Override
+    public TimeFlowCase loadTimeFlowCase(final String key) {
+        final List<TimeFlowPersistCase> persistCases = LitePal.order("id desc").where("key=?", key).limit(1).find(TimeFlowPersistCase.class);
+        if((null != persistCases)&& (persistCases.size() > 0)){
+            final TimeFlowPersistCase persistCase = persistCases.get(0);
+            final TimeFlowCase tfCase = transFromTimeFlowPersistCase(persistCase);
+            return tfCase;
         }
         return null;
     }
@@ -100,6 +132,6 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
         this.unRegisterListener(l);
     }
 
-    private final static String defaultDatabaseName = "PersistTimeBiz";
+    private final static String defaultDatabaseName = "TimeFlowBiz";
     private final static int defaultDatabaseVer = 1;
 }

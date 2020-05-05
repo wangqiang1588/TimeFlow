@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.TimeFlowAddItemActivity">
+        <activity android:name=".Activity.TimeFlowEditCaseActivity">
             <intent-filter>
                 <action android:name="com.mobibrw.timeflowmgr.biz.action.Activity.TimeFlowAddItemActivity"/>
             </intent-filter>

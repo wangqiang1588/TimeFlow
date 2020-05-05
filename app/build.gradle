@@ -30,7 +30,6 @@ dependencies {
     implementation project(':persist-biz')
     implementation project(':persist-api')
     implementation project(':utils')
-    implementation project(':libui')
     implementation rootProject.ext.depLibs.sup_annotations
     testImplementation rootProject.ext.depLibs.junit
 }

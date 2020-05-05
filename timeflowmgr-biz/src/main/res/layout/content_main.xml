@@ -9,11 +9,8 @@
     tools:showIn="@layout/app_bar_main"
     xmlns:swipe="http://schemas.android.com/apk/res-auto">
 
-    <com.mobibrw.timeflowmgr.biz.View.SwipeTimeFlowListView
+    <ListView
         android:id="@+id/timeflowlst"
-        swipe:swipeBackView="@+id/id_back"
-        swipe:swipeCloseAllItemsWhenMoveList="true"
-        swipe:swipeFrontView="@+id/id_front"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -6,7 +6,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.XmlResourceParser;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,8 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
-
-import com.mobibrw.timeflowmgr.biz.BuildConfig;
 import com.mobibrw.timeflowmgr.biz.R;
 
 /**
@@ -167,15 +164,15 @@ public class FloatingActionButtonContainerView extends FrameLayout {
     }
 
     public void setTranslation(View view,int angle){
-        int x  = (int) (length*Math.sin(Math.toRadians(angle)));
-        int y = (int) (length*Math.cos(Math.toRadians(angle)));
-        ObjectAnimator tX = ObjectAnimator.ofFloat(view,"translationX",-x);
-        ObjectAnimator tY = ObjectAnimator.ofFloat(view,"translationY",-y);
-        ObjectAnimator alpha  = ObjectAnimator.ofFloat(view,"alpha",1);
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view,"scaleX",mScale);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view,"scaleY",mScale);
+        final int x  = (int) (length*Math.sin(Math.toRadians(angle)));
+        final int y = (int) (length*Math.cos(Math.toRadians(angle)));
+        final ObjectAnimator tX = ObjectAnimator.ofFloat(view,"translationX",-x);
+        final ObjectAnimator tY = ObjectAnimator.ofFloat(view,"translationY",-y);
+        final ObjectAnimator alpha  = ObjectAnimator.ofFloat(view,"alpha",1);
+        final ObjectAnimator scaleX = ObjectAnimator.ofFloat(view,"scaleX",mScale);
+        final ObjectAnimator scaleY = ObjectAnimator.ofFloat(view,"scaleY",mScale);
 
-        AnimatorSet set = new AnimatorSet();
+        final AnimatorSet set = new AnimatorSet();
         set.play(tX).with(tY).with(alpha);
         set.play(scaleX).with(scaleY).with(tX);
         set.setDuration(mDuration);
@@ -187,10 +184,10 @@ public class FloatingActionButtonContainerView extends FrameLayout {
         int cCount =getChildCount();
         for (int i = 1; i < cCount; i++) {
             final View view = getChildAt(i);
-            ObjectAnimator tX = ObjectAnimator.ofFloat(view,"translationX",0);
-            ObjectAnimator tY = ObjectAnimator.ofFloat(view,"translationY",0);
-            ObjectAnimator alpha  = ObjectAnimator.ofFloat(view,"alpha",0);//透明度 0为完全透明
-            AnimatorSet set = new AnimatorSet(); //动画集合
+            final ObjectAnimator tX = ObjectAnimator.ofFloat(view,"translationX",0);
+            final ObjectAnimator tY = ObjectAnimator.ofFloat(view,"translationY",0);
+            final ObjectAnimator alpha  = ObjectAnimator.ofFloat(view,"alpha",0);//透明度 0为完全透明
+            final AnimatorSet set = new AnimatorSet(); //动画集合
             set.play(tX).with(tY).with(alpha);
             set.setDuration(mDuration); //持续时间
             set.setInterpolator(new AccelerateDecelerateInterpolator());

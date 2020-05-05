@@ -25,7 +25,7 @@ public class TimeFlowMgrActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_flow_mgr);
+        setContentView(R.layout.activity_mgr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -33,8 +33,8 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent();
-                intent.setClass(TimeFlowMgrActivity.this,TimeFlowAddItemActivity.class);
+                final Intent intent=new Intent();
+                intent.setClass(TimeFlowMgrActivity.this, TimeFlowEditCaseActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

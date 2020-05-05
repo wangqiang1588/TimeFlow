@@ -5,8 +5,8 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="btn_remove_caption">Remove</string>
     <string name="timeflow_add_item_content">Content:</string>
     <string name="timeflow_add_item_commit">Commit</string>
-    <string name="content_is_empty">Please Input Content Message</string>
+    <string name="warning_content_empty">Please Input Content Message</string>
+    <string name="warning_persist_failed">Case Persist Failed</string>
 </resources>

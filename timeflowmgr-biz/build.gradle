@@ -27,7 +27,6 @@ dependencies {
     implementation project(':lego')
     implementation project(':res-biz')
     implementation project(':persist-api')
-    implementation project(':libui')
     implementation project(':utils')
     implementation rootProject.ext.depLibs.sup_appcompat_v7
     implementation rootProject.ext.depLibs.sup_design
