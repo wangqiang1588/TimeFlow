@@ -1,5 +1,6 @@
 package com.mobibrw.persist.biz;
 
+import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
 import com.mobibrw.lego.ILego;
@@ -78,7 +79,10 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
 
     @Override
     public void removeTimeFlowCase(final String key) {
-
+        ContentValues values = new ContentValues();
+        values.put("key", key);
+        LitePal.updateAll(TimeFlowPersistCase.class, values, "state=?", TimeFlowPersistCase.TIME_FLOW_PERSIST_CASE_STATE_DEL);
+        broadcastPersistBizChanged();
     }
 
     @Override

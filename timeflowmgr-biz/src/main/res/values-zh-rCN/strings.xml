@@ -3,10 +3,10 @@
     <string name="timeflowmgr_biz_name">时间流</string>
     <string name="navigation_drawer_open">打开导航抽屉</string>
     <string name="navigation_drawer_close">关闭导航抽屉</string>
-
     <string name="action_settings">设置</string>
     <string name="timeflow_add_item_content">内容:</string>
     <string name="timeflow_add_item_commit">添加</string>
     <string name="warning_content_empty">请输入内容</string>
     <string name="warning_persist_failed">数据存储失败</string>
+    <string name="delete">删除</string>
 </resources>

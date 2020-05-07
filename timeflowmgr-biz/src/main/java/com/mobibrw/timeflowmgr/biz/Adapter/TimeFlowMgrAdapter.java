@@ -24,10 +24,6 @@ import static com.mobibrw.persist.api.IPersistApi.TIME_FLOW_LOAD_LIMIT_NONE;
 
 public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.TFViewHolder> {
 
-    private Context ctx;
-    private LayoutInflater inflater;
-    private ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
-
     public TimeFlowMgrAdapter(Context context) {
         this.ctx = context;
         this.inflater = LayoutInflater.from(this.getContext());
@@ -67,14 +63,19 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
 
     //创建ViewHolder
     public static class TFViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtCaption;
+        private TextView tvCaption;
+        private TextView tvDel;
+        private TextView tvDate;
         private TimeFlowCase tfCase;
         private Context ctx;
 
         public TFViewHolder(Context c, View v) {
             super(v);
             ctx = c;
-            txtCaption = (TextView) v.findViewById(R.id.txtCaption);
+            tvCaption = (TextView) v.findViewById(R.id.txtCaption);
+            tvDel = (TextView) v.findViewById(R.id.tv_delete);
+            tvDate = (TextView) v.findViewById(R.id.tv_date);
+
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,11 +87,23 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
                     ctx.startActivity(intent);
                 }
             });
+
+            tvDel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PersistApiBu.api().removeTimeFlowCase(tfCase.getKey());
+                }
+            });
         }
 
         public void setTfCase(TimeFlowCase c) {
             tfCase = c;
-            txtCaption.setText(tfCase.getContent());
+            tvCaption.setText(tfCase.getContent());
+            tvDate.setText("date time");
         }
     }
+
+    private Context ctx;
+    private LayoutInflater inflater;
+    private ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
 }

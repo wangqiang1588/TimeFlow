@@ -8,7 +8,7 @@
     tools:context="com.mobibrw.timeflowmgr.biz.Activity.TimeFlowMgrActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <android.support.v7.widget.RecyclerView
+    <com.mobibrw.timeflowmgr.biz.View.SlideRecyclerView
         android:id="@+id/tfRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

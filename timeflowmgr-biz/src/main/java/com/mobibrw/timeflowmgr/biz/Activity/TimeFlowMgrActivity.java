@@ -1,10 +1,12 @@
 package com.mobibrw.timeflowmgr.biz.Activity;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,7 @@ import com.mobibrw.persist.api.IPersistListener;
 import com.mobibrw.persist.api.PersistApiBu;
 import com.mobibrw.timeflowmgr.biz.Adapter.TimeFlowMgrAdapter;
 import com.mobibrw.timeflowmgr.biz.R;
+import com.mobibrw.timeflowmgr.biz.View.SlideRecyclerView;
 
 public class TimeFlowMgrActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IPersistListener {
@@ -52,10 +55,16 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        RecyclerView rv = (RecyclerView)findViewById(R.id.tfRecyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        slideRecyclerView = (SlideRecyclerView)findViewById(R.id.tfRecyclerView);
+        slideRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        //分割线
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider_inset));
+        slideRecyclerView.addItemDecoration(itemDecoration);
+
         tfMgrAdapter = new TimeFlowMgrAdapter(this);
-        rv.setAdapter(tfMgrAdapter);
+        slideRecyclerView.setAdapter(tfMgrAdapter);
         PersistApiBu.api().registerPersistListener(this);
     }
 
@@ -119,6 +128,7 @@ public class TimeFlowMgrActivity extends AppCompatActivity
     @Override
     public void onPersistBizChanged() {
         tfMgrAdapter.fireTimeFlowDataSetChanged();
+        slideRecyclerView.closeMenu();
     }
 
     @Override
@@ -128,4 +138,5 @@ public class TimeFlowMgrActivity extends AppCompatActivity
     }
 
     private TimeFlowMgrAdapter tfMgrAdapter;
+    private SlideRecyclerView slideRecyclerView;
 }
