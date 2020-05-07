@@ -5,5 +5,5 @@ package com.mobibrw.persist.api;
  */
 
 public interface IPersistListener {
-    void onPersistMessageChanged();
+    void onPersistBizChanged();
 }

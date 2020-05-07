@@ -61,7 +61,7 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                l.onPersistMessageChanged();
+                l.onPersistBizChanged();
             }
         };
         PersistBizBu.this.postLegoRunnable(l, runnable);

@@ -2,10 +2,11 @@ package com.mobibrw.timeflowmgr.biz.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.mobibrw.persist.api.PersistApiBu;
@@ -21,7 +22,7 @@ import static com.mobibrw.persist.api.IPersistApi.TIME_FLOW_LOAD_LIMIT_NONE;
  * Created by longsky on 2017/7/15.
  */
 
-public class TimeFlowMgrAdapter extends BaseAdapter {
+public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.TFViewHolder> {
 
     private Context ctx;
     private LayoutInflater inflater;
@@ -39,68 +40,57 @@ public class TimeFlowMgrAdapter extends BaseAdapter {
 
     private LayoutInflater getInflater() { return inflater; }
 
-    @Override
-    public void notifyDataSetChanged() {
+    public void fireTimeFlowDataSetChanged() {
         final ArrayList<TimeFlowCase> tfCases = PersistApiBu.api().loadCompleteTimeFlowCases(TIME_FLOW_LOAD_LIMIT_NONE);
         timeFlowCases.clear();
         timeFlowCases.addAll(tfCases);
         super.notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        final int count = timeFlowCases.size();
-        return count;
+    public TFViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final View view = getInflater().inflate(R.layout.case_item, parent, false);
+        return new TFViewHolder(ctx, view);
     }
 
     @Override
-    public Object getItem(int i) {
-        return timeFlowCases.get(i);
+    public void onBindViewHolder(@NonNull TFViewHolder holder, int i) {
+        final TimeFlowCase tfCase = timeFlowCases.get(i);
+        holder.setTfCase(tfCase);
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
+    public int getItemCount() {
+        return timeFlowCases.size();
     }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
-        if (null == view) {
-            view = getInflater().inflate(R.layout.time_item, null); //see above, you can use the passed resource id.
-        }else{
-            holder = (ViewHolder)view.getTag();
+    //创建ViewHolder
+    public static class TFViewHolder extends RecyclerView.ViewHolder {
+        private TextView txtCaption;
+        private TimeFlowCase tfCase;
+        private Context ctx;
+
+        public TFViewHolder(Context c, View v) {
+            super(v);
+            ctx = c;
+            txtCaption = (TextView) v.findViewById(R.id.txtCaption);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //item 点击事件
+                    final Intent intent = new Intent();
+                    intent.setClass(ctx, TimeFlowEditCaseActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(TimeFlowEditCaseActivity.TIME_FLOW_CASE_KEY, tfCase.getKey());
+                    ctx.startActivity(intent);
+                }
+            });
         }
-        if(null == holder){
-            holder = new ViewHolder();
-            holder.txtCaption = (TextView) view.findViewById(R.id.txtCaption);
-            final TimeFlowCase tfCase = timeFlowCases.get(i);
-            holder.tfCase = tfCase;
-            view.setTag(holder);
-        } else {
-            final TimeFlowCase tfCase = timeFlowCases.get(i);
-            holder.tfCase = tfCase;
+
+        public void setTfCase(TimeFlowCase c) {
+            tfCase = c;
+            txtCaption.setText(tfCase.getContent());
         }
-
-        holder.txtCaption.setText(holder.tfCase.getContent());
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Intent intent = new Intent();
-                intent.setClass(ctx, TimeFlowEditCaseActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                final ViewHolder holder = (ViewHolder)v.getTag();
-                intent.putExtra(TimeFlowEditCaseActivity.TIME_FLOW_CASE_KEY, holder.tfCase.getKey());
-                ctx.startActivity(intent);
-            }
-        });
-
-        return view;
-    }
-
-    private static class ViewHolder {
-        public TextView txtCaption;
-        public TimeFlowCase tfCase;
     }
 }
