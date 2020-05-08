@@ -80,8 +80,8 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
     @Override
     public void removeTimeFlowCase(final String key) {
         ContentValues values = new ContentValues();
-        values.put("key", key);
-        LitePal.updateAll(TimeFlowPersistCase.class, values, "state=?", TimeFlowPersistCase.TIME_FLOW_PERSIST_CASE_STATE_DEL);
+        values.put("state", TimeFlowPersistCase.TIME_FLOW_PERSIST_CASE_STATE_DEL);
+        LitePal.updateAll(TimeFlowPersistCase.class, values, "key=?", key);
         broadcastPersistBizChanged();
     }
 
