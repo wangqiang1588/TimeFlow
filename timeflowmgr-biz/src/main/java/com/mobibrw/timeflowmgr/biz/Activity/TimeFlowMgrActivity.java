@@ -20,11 +20,12 @@ import android.view.MenuItem;
 import com.mobibrw.persist.api.IPersistListener;
 import com.mobibrw.persist.api.PersistApiBu;
 import com.mobibrw.timeflowmgr.biz.Adapter.TimeFlowMgrAdapter;
+import com.mobibrw.timeflowmgr.biz.Adapter.TimeFlowViewClickInterceptor;
 import com.mobibrw.timeflowmgr.biz.R;
 import com.mobibrw.timeflowmgr.biz.View.SlideRecyclerView;
 
 public class TimeFlowMgrActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, IPersistListener {
+        implements NavigationView.OnNavigationItemSelectedListener, IPersistListener, TimeFlowViewClickInterceptor {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         itemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider_inset));
         slideRecyclerView.addItemDecoration(itemDecoration);
 
-        tfMgrAdapter = new TimeFlowMgrAdapter(this);
+        tfMgrAdapter = new TimeFlowMgrAdapter(this, this);
         slideRecyclerView.setAdapter(tfMgrAdapter);
         PersistApiBu.api().registerPersistListener(this);
     }
@@ -135,6 +136,15 @@ public class TimeFlowMgrActivity extends AppCompatActivity
     protected void onDestroy() {
         PersistApiBu.api().unRegisterPersistListener(this);
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onTimeFlowCaseViewClick(View v) {
+        if (slideRecyclerView.isMenuOpen()) {
+            slideRecyclerView.closeMenu();
+            return false;
+        }
+        return true;
     }
 
     private TimeFlowMgrAdapter tfMgrAdapter;

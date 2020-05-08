@@ -24,8 +24,9 @@ import static com.mobibrw.persist.api.IPersistApi.TIME_FLOW_LOAD_LIMIT_NONE;
 
 public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.TFViewHolder> {
 
-    public TimeFlowMgrAdapter(Context context) {
+    public TimeFlowMgrAdapter(Context context, TimeFlowViewClickInterceptor interceptor) {
         this.ctx = context;
+        this.clickInterceptor = interceptor;
         this.inflater = LayoutInflater.from(this.getContext());
         final ArrayList<TimeFlowCase> tfCases = PersistApiBu.api().loadCompleteTimeFlowCases(TIME_FLOW_LOAD_LIMIT_NONE);
         timeFlowCases.clear();
@@ -47,7 +48,7 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
     @Override
     public TFViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = getInflater().inflate(R.layout.case_item, parent, false);
-        return new TFViewHolder(ctx, view);
+        return new TFViewHolder(ctx, view, clickInterceptor);
     }
 
     @Override
@@ -68,10 +69,12 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
         private TextView tvDate;
         private TimeFlowCase tfCase;
         private Context ctx;
+        private TimeFlowViewClickInterceptor clickInterceptor;
 
-        public TFViewHolder(Context c, View v) {
+        public TFViewHolder(Context c, View v, TimeFlowViewClickInterceptor interceptor) {
             super(v);
             ctx = c;
+            clickInterceptor = interceptor;
             tvCaption = (TextView) v.findViewById(R.id.txtCaption);
             tvDel = (TextView) v.findViewById(R.id.tv_delete);
             tvDate = (TextView) v.findViewById(R.id.tv_date);
@@ -79,12 +82,18 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //item 点击事件
-                    final Intent intent = new Intent();
-                    intent.setClass(ctx, TimeFlowEditCaseActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(TimeFlowEditCaseActivity.TIME_FLOW_CASE_KEY, tfCase.getKey());
-                    ctx.startActivity(intent);
+                    boolean fireClick = true;
+                    if(null != clickInterceptor) {
+                        fireClick = clickInterceptor.onTimeFlowCaseViewClick(v);
+                    }
+                    if(fireClick) {
+                        //item 点击事件
+                        final Intent intent = new Intent();
+                        intent.setClass(ctx, TimeFlowEditCaseActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(TimeFlowEditCaseActivity.TIME_FLOW_CASE_KEY, tfCase.getKey());
+                        ctx.startActivity(intent);
+                    }
                 }
             });
 
@@ -106,4 +115,5 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
     private Context ctx;
     private LayoutInflater inflater;
     private ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
+    private TimeFlowViewClickInterceptor clickInterceptor;
 }
