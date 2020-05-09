@@ -124,7 +124,7 @@ public class SlideRecyclerView extends RecyclerView {
                     break;
                 case MotionEvent.ACTION_UP:
                     if (mMenuViewWidth != INVALID_CHILD_WIDTH) {
-                        int scrollX = mFlingView.getScrollX();
+                        final int scrollX = mFlingView.getScrollX();
                         mVelocityTracker.computeCurrentVelocity(1000);
                         // 此处有两个原因决定是否打开菜单：
                         // 1.菜单被拉出宽度大于菜单宽度一半；
@@ -210,7 +210,12 @@ public class SlideRecyclerView extends RecyclerView {
      */
     public void closeMenu() {
         if (mFlingView != null && mFlingView.getScrollX() != 0) {
-            mFlingView.scrollTo(0, 0);
+            //mFlingView.scrollTo(0, 0);
+            //动画关闭，不要直接关闭，否则感受很差
+            final int scrollX = mFlingView.getScrollX();
+            final int scrollY = mFlingView.getScrollY();
+            mScroller.startScroll(scrollX, scrollY, -scrollX, scrollY);
+            invalidate();
         }
     }
 
