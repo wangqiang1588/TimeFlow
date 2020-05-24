@@ -13,8 +13,11 @@ import com.mobibrw.persist.api.PersistApiBu;
 import com.mobibrw.persist.api.TimeFlowCase;
 import com.mobibrw.timeflowmgr.biz.Activity.TimeFlowEditCaseActivity;
 import com.mobibrw.timeflowmgr.biz.R;
+import com.mobibrw.utils.TimeUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.mobibrw.persist.api.IPersistApi.TIME_FLOW_LOAD_LIMIT_NONE;
 
@@ -64,12 +67,6 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
 
     //创建ViewHolder
     public static class TFViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvCaption;
-        private TextView tvDel;
-        private TextView tvDate;
-        private TimeFlowCase tfCase;
-        private Context ctx;
-        private TimeFlowViewClickInterceptor clickInterceptor;
 
         public TFViewHolder(Context c, View v, TimeFlowViewClickInterceptor interceptor) {
             super(v);
@@ -108,8 +105,37 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
         public void setTfCase(TimeFlowCase c) {
             tfCase = c;
             tvCaption.setText(tfCase.getContent());
-            tvDate.setText("date time");
+            setupModifyTime(tvDate, tfCase);
         }
+
+        private void setupModifyTime(TextView dateTime, TimeFlowCase c) {
+            final String modTime = c.getModified();
+            try {
+                final Date dt = TimeUtils.timeStampFmtToDate(modTime);
+                final boolean today = TimeUtils.isToday(dt);
+                String dtCaption = "";
+                if(today) {
+                    dtCaption = "" + TimeUtils.getHourOfDay(dt) + ":" + TimeUtils.getMinute(dt) + ":" + TimeUtils.getSecond(dt);
+                } else {
+                    final boolean thisYear = TimeUtils.isThisYear(dt);
+                    if(thisYear) {
+                        dtCaption = "" + TimeUtils.getMonth(dt) + "/" + TimeUtils.getDayOfMonth(dt) + " " + TimeUtils.getHourOfDay(dt) + ":" + TimeUtils.getMinute(dt) + ":" + TimeUtils.getSecond(dt);
+                    } else {
+                        dtCaption = "" + TimeUtils.getYear(dt) + "/" + TimeUtils.getMonth(dt) + "/" + TimeUtils.getDayOfMonth(dt) + " " + TimeUtils.getHourOfDay(dt) + ":" + TimeUtils.getMinute(dt) + ":" + TimeUtils.getSecond(dt);
+                    }
+                }
+                dateTime.setText(dtCaption);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private TextView tvCaption;
+        private TextView tvDel;
+        private TextView tvDate;
+        private TimeFlowCase tfCase;
+        private Context ctx;
+        private TimeFlowViewClickInterceptor clickInterceptor;
     }
 
     private Context ctx;
