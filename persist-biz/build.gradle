@@ -26,7 +26,7 @@ dependencies {
     androidTestImplementation rootProject.ext.depLibs.espresso_core
     implementation project(':lego')
     implementation rootProject.ext.depLibs.sup_appcompat_v7
-    implementation 'org.litepal.android:java:3.0.0'
+    implementation rootProject.ext.depLibs.litepal
     implementation project(':persist-api')
     implementation project(':utils')
     testImplementation rootProject.ext.depLibs.junit

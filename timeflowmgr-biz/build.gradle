@@ -30,7 +30,7 @@ dependencies {
     implementation project(':utils')
     implementation rootProject.ext.depLibs.sup_appcompat_v7
     implementation rootProject.ext.depLibs.sup_design
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation rootProject.ext.depLibs.sup_constraint_layout
     implementation rootProject.ext.depLibs.sup_recyclerview_v7
     testImplementation rootProject.ext.depLibs.junit
 }

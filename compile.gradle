@@ -1,13 +1,13 @@
 ext {
     buildConf = [
             // 编译SDK的版本
-            compSdkVer: 28,
+            compSdkVer: 30,
             // build tools的版本
-            buildToolsVer: "28.0.3",
+            buildToolsVer: "30.0.0",
             // 最低支持的SDK版本
             minSdkVer    : 15,
             // 当前选中的sdk版本
-            targetSdkVer : 28,
+            targetSdkVer : 30,
             //版本号
             verCode      : 1,
             //版本名
