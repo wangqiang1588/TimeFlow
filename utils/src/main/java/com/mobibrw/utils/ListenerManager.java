@@ -44,34 +44,32 @@ public class ListenerManager<T> {
 
     private void cancelPostedRunnable(@NonNull final T listener) {
         synchronized (runnableExsLock) {
-            final ArrayList<RunnableEx> runnables = new ArrayList<>();
+            final ArrayList<RunnableEx> runnableArr = new ArrayList<>();
             final Iterator<LinkedHashMap.Entry<RunnableEx, WeakReference<T>>> iterator = runnableExs.entrySet().iterator();
             while (iterator.hasNext()) {
                 final LinkedHashMap.Entry<RunnableEx, WeakReference<T>> element = iterator.next();
-                final RunnableEx runnable = element.getKey();
-                if (null != runnable) {
+                final RunnableEx rx = element.getKey();
+                if (null != rx) {
                     final WeakReference<T> weak = element.getValue();
                     if (null != weak) {
                         final T strong = weak.get();
                         if (null != strong) {
                             if (strong.equals(listener)) {
-                                mHandler.removeCallbacks(runnable);
-                                runnables.add(runnable);
+                                mHandler.removeCallbacks(rx);
+                                runnableArr.add(rx);
                             }
                         } else {
-                            mHandler.removeCallbacks(runnable);
-                            runnables.add(runnable);
+                            mHandler.removeCallbacks(rx);
+                            runnableArr.add(rx);
                         }
                     } else {
-                        mHandler.removeCallbacks(runnable);
-                        runnables.add(runnable);
+                        mHandler.removeCallbacks(rx);
+                        runnableArr.add(rx);
                     }
-                } else {
-                    runnables.add(runnable);
                 }
             }
-            for (Runnable runnable : runnables) {
-                runnableExs.remove(runnable);
+            for (Runnable r : runnableArr) {
+                runnableExs.remove(r);
             }
         }
     }

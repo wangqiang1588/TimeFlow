@@ -23,15 +23,14 @@ public class EquatableWeakReference<T> extends WeakReference<T> {
      */
     @Override
     public boolean equals(final Object obj) {
+        Object strong_obj = get();
         if (obj instanceof Reference) {
-            Object strong_obj = get();
             if (null != strong_obj) {
                 return strong_obj.equals(((Reference) obj).get());
             } else {
                 return null == ((Reference) obj).get();
             }
         } else {
-            Object strong_obj = get();
             if (null != strong_obj) {
                 return strong_obj.equals(obj);
             } else {
