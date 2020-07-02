@@ -20,7 +20,7 @@ public class ListenerManager<T> {
 
     public boolean registerListener(@NonNull final T listener) {
         final EquatableWeakReference<T> equatableWeakListener = new EquatableWeakReference<>(listener);
-        synchronized (listenersLock) {
+        synchronized (lock) {
             if (listeners.contains(equatableWeakListener)) {
                 return false;
             }
@@ -32,33 +32,28 @@ public class ListenerManager<T> {
 
     public boolean unRegisterListener(@NonNull final T listener) {
         final EquatableWeakReference<T> equatableWeakListener = new EquatableWeakReference<>(listener);
-        synchronized (listenersLock) {
+        synchronized (lock) {
             if (!listeners.contains(equatableWeakListener)) {
                 return false;
             }
             listeners.remove(equatableWeakListener);
+            cancelPostedRunnable(listener);
         }
-        cancelPostedRunnable(listener);
         return true;
     }
 
     private void cancelPostedRunnable(@NonNull final T listener) {
-        synchronized (runnableExsLock) {
-            final ArrayList<RunnableEx> runnableArr = new ArrayList<>();
-            final Iterator<LinkedHashMap.Entry<RunnableEx, WeakReference<T>>> iterator = runnableExs.entrySet().iterator();
-            while (iterator.hasNext()) {
-                final LinkedHashMap.Entry<RunnableEx, WeakReference<T>> element = iterator.next();
-                final RunnableEx rx = element.getKey();
-                if (null != rx) {
-                    final WeakReference<T> weak = element.getValue();
-                    if (null != weak) {
-                        final T strong = weak.get();
-                        if (null != strong) {
-                            if (strong.equals(listener)) {
-                                mHandler.removeCallbacks(rx);
-                                runnableArr.add(rx);
-                            }
-                        } else {
+        final ArrayList<RunnableEx> runnableArr = new ArrayList<>();
+        final Iterator<LinkedHashMap.Entry<RunnableEx, WeakReference<T>>> iterator = runnableExs.entrySet().iterator();
+        while (iterator.hasNext()) {
+            final LinkedHashMap.Entry<RunnableEx, WeakReference<T>> element = iterator.next();
+            final RunnableEx rx = element.getKey();
+            if (null != rx) {
+                final WeakReference<T> weak = element.getValue();
+                if (null != weak) {
+                    final T strong = weak.get();
+                    if (null != strong) {
+                        if (strong.equals(listener)) {
                             mHandler.removeCallbacks(rx);
                             runnableArr.add(rx);
                         }
@@ -66,16 +61,19 @@ public class ListenerManager<T> {
                         mHandler.removeCallbacks(rx);
                         runnableArr.add(rx);
                     }
+                } else {
+                    mHandler.removeCallbacks(rx);
+                    runnableArr.add(rx);
                 }
             }
-            for (Runnable r : runnableArr) {
-                runnableExs.remove(r);
-            }
+        }
+        for (Runnable r : runnableArr) {
+            runnableExs.remove(r);
         }
     }
 
     public void clearListener() {
-        synchronized (listenersLock) {
+        synchronized (lock) {
             final Iterator<EquatableWeakReference<T>> iterator = listeners.iterator();
             while (iterator.hasNext()) {
                 final EquatableWeakReference<T> listener = iterator.next();
@@ -87,11 +85,13 @@ public class ListenerManager<T> {
                 }
             }
             listeners.clear();
+            runnableExs.clear();
+            mHandler.removeCallbacksAndMessages(null);
         }
     }
 
     public void forEachListener(@NonNull final IForEachListener<T> listener) {
-        synchronized (listenersLock) {
+        synchronized (lock) {
             final Iterator<EquatableWeakReference<T>> iterator = listeners.iterator();
             while (iterator.hasNext()) {
                 final EquatableWeakReference<T> weak = iterator.next();
@@ -108,15 +108,13 @@ public class ListenerManager<T> {
     }
 
     public boolean postRunnable(@NonNull final T listener, @NonNull final Runnable runnable) {
-        final RunnableEx<T> runnableEx = new RunnableEx<T>(runnableExs, runnableExsLock, runnable);
-        synchronized (runnableExsLock) {
+        final RunnableEx<T> runnableEx = new RunnableEx<T>(runnableExs, lock, runnable);
+        synchronized (lock) {
             runnableExs.put(runnableEx, new WeakReference<T>(listener));
-        }
-        if (!mHandler.post(runnableEx)) {
-            synchronized (runnableExsLock) {
+            if (!mHandler.post(runnableEx)) {
                 runnableExs.remove(runnableEx);
+                return false;
             }
-            return false;
         }
         return true;
     }
@@ -142,8 +140,7 @@ public class ListenerManager<T> {
     }
 
     private final LinkedHashSet<EquatableWeakReference<T>> listeners = new LinkedHashSet<>();
-    private final Object listenersLock = new Object();
+    private final Object lock = new Object();
     private final LinkedHashMap<RunnableEx, WeakReference<T>> runnableExs = new LinkedHashMap<>();
-    private final Object runnableExsLock = new Object();
-    private static final android.os.Handler mHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+    private final android.os.Handler mHandler = new android.os.Handler(android.os.Looper.getMainLooper());
 }
