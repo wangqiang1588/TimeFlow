@@ -12,6 +12,11 @@ import com.mobibrw.utils.ListenerManager;
 abstract public class SimpleLegoBizBundle<T> extends LegoBizBundle {
 
     private final ListenerManager<T> listenersManager = new ListenerManager<>();
+    private volatile boolean isDestroyed = false;
+
+    protected boolean isDestroyed() {
+        return isDestroyed;
+    }
 
     protected boolean registerListener(@NonNull final T listener) {
         return listenersManager.registerListener(listener);
@@ -32,6 +37,7 @@ abstract public class SimpleLegoBizBundle<T> extends LegoBizBundle {
     @Override
     @CallSuper
     protected void onBundleDestroy() {
+        isDestroyed = true;
         listenersManager.clearListener();
     }
 
