@@ -1,5 +1,6 @@
 package com.mobibrw.lego;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 import com.mobibrw.utils.ListenerManager;
@@ -9,6 +10,8 @@ import com.mobibrw.utils.ListenerManager;
  */
 
 abstract public class SimpleLegoBizBundle<T> extends LegoBizBundle {
+
+    private final ListenerManager<T> listenersManager = new ListenerManager<>();
 
     protected boolean registerListener(@NonNull final T listener) {
         return listenersManager.registerListener(listener);
@@ -26,6 +29,10 @@ abstract public class SimpleLegoBizBundle<T> extends LegoBizBundle {
         return listenersManager.postRunnable(listener, runnable);
     }
 
-    private final ListenerManager<T> listenersManager = new ListenerManager<>();
+    @Override
+    @CallSuper
+    protected void onBundleDestroy() {
+        listenersManager.clearListener();
+    }
 
 }

@@ -42,7 +42,7 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
 
     @Override
     protected void onBundleDestroy() {
-
+        super.onBundleDestroy();
     }
 
     @Override
