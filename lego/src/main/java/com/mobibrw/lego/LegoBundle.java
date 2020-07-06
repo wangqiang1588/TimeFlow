@@ -1,5 +1,6 @@
 package com.mobibrw.lego;
 
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 
 /**
@@ -7,6 +8,9 @@ import android.support.annotation.NonNull;
  */
 
 public abstract class LegoBundle {
+    @MainThread
     abstract protected void onBundleCreate(@NonNull final ILego lego);
+
+    @MainThread
     abstract protected void onBundleDestroy();
 }

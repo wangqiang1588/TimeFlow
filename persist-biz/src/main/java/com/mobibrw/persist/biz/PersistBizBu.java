@@ -1,6 +1,7 @@
 package com.mobibrw.persist.biz;
 
 import android.content.ContentValues;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 
 import com.mobibrw.lego.ILego;
@@ -32,6 +33,7 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
         return tfCase;
     }
 
+    @MainThread
     @Override
     protected void onBundleCreate(@NonNull final ILego lego) {
         LitePal.initialize(lego.getLegoContext());
@@ -40,6 +42,7 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
         LitePal.use(litePalDB);
     }
 
+    @MainThread
     @Override
     protected void onBundleDestroy() {
         super.onBundleDestroy();
