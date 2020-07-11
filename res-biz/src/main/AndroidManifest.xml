@@ -2,7 +2,8 @@
 
     package="com.mobibrw.timeflow.res.biz">
 
-    <application android:allowBackup="true"
+    <application
+        android:allowBackup="true"
         android:supportsRtl="true">
 
     </application>

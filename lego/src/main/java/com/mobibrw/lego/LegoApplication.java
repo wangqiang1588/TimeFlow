@@ -9,16 +9,19 @@ import android.support.annotation.NonNull;
 
 public class LegoApplication implements ILego {
 
-    public LegoApplication(@NonNull final ILegoAppContext legoAppContext){
-       this.legoAppContext = legoAppContext;
+    private final ILegoAppContext legoAppContext;
+    private LegoBundleMgr legoBundleMgr;
+
+    public LegoApplication(@NonNull final ILegoAppContext legoAppContext) {
+        this.legoAppContext = legoAppContext;
     }
 
-    public void onApplicationCreate(){
-        legoBundleMgr = new LegoBundleMgr(this,this.legoAppContext.getAppBundles());
+    public void onApplicationCreate() {
+        legoBundleMgr = new LegoBundleMgr(this, this.legoAppContext.getAppBundles());
         legoBundleMgr.onLegoApplicationCreate();
     }
 
-    public void onApplicationTerminate(){
+    public void onApplicationTerminate() {
         legoBundleMgr.onLegoApplicationTerminate();
     }
 
@@ -31,7 +34,4 @@ public class LegoApplication implements ILego {
     public Context getLegoContext() {
         return this.legoAppContext.getAppContext();
     }
-
-    private final ILegoAppContext legoAppContext;
-    private LegoBundleMgr legoBundleMgr;
 }

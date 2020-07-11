@@ -17,11 +17,11 @@ public class TimeUtils {
     private final static String TIME_STAMP_FORMAT = "yyyyMMddHHmmssSSS";
     private final static String GMT_TIME_FORMAT = "EEE,yyyy-MM-dd HH:mm:ss";
 
-    public static String getGMT(int year,int month,int day,int hour,int minute) {
+    public static String getGMT(int year, int month, int day, int hour, int minute) {
         final SimpleDateFormat sdf = new SimpleDateFormat(GMT_TIME_FORMAT);
         sdf.setTimeZone(TimeZone.getDefault());
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        calendar.set(year,month,day,hour,minute);
+        calendar.set(year, month, day, hour, minute);
         return sdf.format(calendar.getTime());
     }
 

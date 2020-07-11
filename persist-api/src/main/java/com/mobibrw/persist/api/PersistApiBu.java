@@ -13,10 +13,18 @@ import com.mobibrw.lego.LegoBundleNames;
 
 public final class PersistApiBu extends LegoApiBundle {
 
+    static private IPersistApi mApi;
+
+    static public IPersistApi api() {
+        return mApi;
+    }
+
+    // /////////////////////////////////////////////////////////////////////////////
+
     @MainThread
     @Override
     protected void onBundleCreate(@NonNull final ILego lego) {
-        mApi = (IPersistApi) getLegoBundle(lego,LegoBundleNames.PersistBizBu);
+        mApi = (IPersistApi) getLegoBundle(lego, LegoBundleNames.PersistBizBu);
     }
 
     @MainThread
@@ -24,12 +32,4 @@ public final class PersistApiBu extends LegoApiBundle {
     protected void onBundleDestroy() {
         mApi = null;
     }
-
-    // /////////////////////////////////////////////////////////////////////////////
-
-    static public IPersistApi api() {
-        return mApi;
-    }
-
-    static private IPersistApi mApi;
 }

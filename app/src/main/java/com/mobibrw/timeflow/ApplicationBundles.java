@@ -3,6 +3,7 @@ package com.mobibrw.timeflow;
 import android.support.annotation.NonNull;
 
 import com.mobibrw.lego.LegoBundleNames;
+
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class ApplicationBundles {
 
     @NonNull
-    public static ArrayList<String> getApplicationBundles(){
+    public static ArrayList<String> getApplicationBundles() {
         final ArrayList<String> bundles = new ArrayList<>();
         bundles.add(LegoBundleNames.PersistBizBu);
         bundles.add(LegoBundleNames.PersistApiBu);

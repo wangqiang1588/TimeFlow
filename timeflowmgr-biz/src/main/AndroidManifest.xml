@@ -17,7 +17,7 @@
         </activity>
         <activity android:name=".Activity.TimeFlowEditCaseActivity">
             <intent-filter>
-                <action android:name="com.mobibrw.timeflowmgr.biz.action.Activity.TimeFlowAddItemActivity"/>
+                <action android:name="com.mobibrw.timeflowmgr.biz.action.Activity.TimeFlowAddItemActivity" />
             </intent-filter>
         </activity>
     </application>

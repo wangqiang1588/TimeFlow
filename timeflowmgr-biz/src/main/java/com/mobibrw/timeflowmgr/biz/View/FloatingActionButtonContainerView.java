@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
+
 import com.mobibrw.timeflowmgr.biz.R;
 
 /**
@@ -47,7 +48,7 @@ public class FloatingActionButtonContainerView extends FrameLayout {
         this.initContainerView();
     }
 
-    private void initContainerView(){
+    private void initContainerView() {
         this.removeAllViews();
         setupCtrlButton();
         setContainerSize(INIT_SIZE);
@@ -67,7 +68,7 @@ public class FloatingActionButtonContainerView extends FrameLayout {
         layoutExpandChildButton();
     }
 
-    private void layoutCtrlButton(){
+    private void layoutCtrlButton() {
         //获取宽高
         int width = ctrlButton.getMeasuredWidth();
         int height = ctrlButton.getMeasuredHeight();
@@ -79,7 +80,7 @@ public class FloatingActionButtonContainerView extends FrameLayout {
         ctrlButton.layout(mWidth - width, (mHeight - height) / 2, mWidth, (mHeight - height) / 2 + height);
     }
 
-    private void layoutExpandChildButton(){
+    private void layoutExpandChildButton() {
         final int cCount = getChildCount();
         final int width = ctrlButton.getMeasuredWidth();
         final int height = ctrlButton.getMeasuredHeight();
@@ -91,11 +92,11 @@ public class FloatingActionButtonContainerView extends FrameLayout {
         }
     }
 
-    private void setupCtrlButton(){
+    private void setupCtrlButton() {
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         ctrlButton = new FloatingActionButton(this.getContext());
         ctrlButton.setImageResource(android.R.drawable.ic_input_add);
-        final ColorStateList csl= getResources().getColorStateList(R.color.colorMainFloatActionButtonBackgroundTint);
+        final ColorStateList csl = getResources().getColorStateList(R.color.colorMainFloatActionButtonBackgroundTint);
         ctrlButton.setBackgroundTintList(csl);
         //设置主按钮的点击事件
         setCtrlButtonListener(ctrlButton);
@@ -163,14 +164,14 @@ public class FloatingActionButtonContainerView extends FrameLayout {
         });
     }
 
-    public void setTranslation(View view,int angle){
-        final int x  = (int) (length*Math.sin(Math.toRadians(angle)));
-        final int y = (int) (length*Math.cos(Math.toRadians(angle)));
-        final ObjectAnimator tX = ObjectAnimator.ofFloat(view,"translationX",-x);
-        final ObjectAnimator tY = ObjectAnimator.ofFloat(view,"translationY",-y);
-        final ObjectAnimator alpha  = ObjectAnimator.ofFloat(view,"alpha",1);
-        final ObjectAnimator scaleX = ObjectAnimator.ofFloat(view,"scaleX",mScale);
-        final ObjectAnimator scaleY = ObjectAnimator.ofFloat(view,"scaleY",mScale);
+    public void setTranslation(View view, int angle) {
+        final int x = (int) (length * Math.sin(Math.toRadians(angle)));
+        final int y = (int) (length * Math.cos(Math.toRadians(angle)));
+        final ObjectAnimator tX = ObjectAnimator.ofFloat(view, "translationX", -x);
+        final ObjectAnimator tY = ObjectAnimator.ofFloat(view, "translationY", -y);
+        final ObjectAnimator alpha = ObjectAnimator.ofFloat(view, "alpha", 1);
+        final ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", mScale);
+        final ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", mScale);
 
         final AnimatorSet set = new AnimatorSet();
         set.play(tX).with(tY).with(alpha);
@@ -180,13 +181,13 @@ public class FloatingActionButtonContainerView extends FrameLayout {
         set.start();
     }
 
-    private void setBackTranslation(){
-        int cCount =getChildCount();
+    private void setBackTranslation() {
+        int cCount = getChildCount();
         for (int i = 1; i < cCount; i++) {
             final View view = getChildAt(i);
-            final ObjectAnimator tX = ObjectAnimator.ofFloat(view,"translationX",0);
-            final ObjectAnimator tY = ObjectAnimator.ofFloat(view,"translationY",0);
-            final ObjectAnimator alpha  = ObjectAnimator.ofFloat(view,"alpha",0);//透明度 0为完全透明
+            final ObjectAnimator tX = ObjectAnimator.ofFloat(view, "translationX", 0);
+            final ObjectAnimator tY = ObjectAnimator.ofFloat(view, "translationY", 0);
+            final ObjectAnimator alpha = ObjectAnimator.ofFloat(view, "alpha", 0);//透明度 0为完全透明
             final AnimatorSet set = new AnimatorSet(); //动画集合
             set.play(tX).with(tY).with(alpha);
             set.setDuration(mDuration); //持续时间
@@ -202,11 +203,11 @@ public class FloatingActionButtonContainerView extends FrameLayout {
         }
     }
 
-    public void setRotateAnimation(View view,int flag){
+    public void setRotateAnimation(View view, int flag) {
         ObjectAnimator rotate = null;
-        if(flag==DO_ROTATE)
-            rotate = ObjectAnimator.ofFloat(view,"rotation",135);
-        else rotate = ObjectAnimator.ofFloat(view,"rotation",0);
+        if (flag == DO_ROTATE)
+            rotate = ObjectAnimator.ofFloat(view, "rotation", 135);
+        else rotate = ObjectAnimator.ofFloat(view, "rotation", 0);
         rotate.setDuration(mDuration);
         rotate.start();
     }
@@ -218,20 +219,21 @@ public class FloatingActionButtonContainerView extends FrameLayout {
     private void setChildButtonListener(final View view) {
         //设置点击时候执行点击事件并且缩回原来的位置
         view.setOnTouchListener(new OnTouchListener() {
-            int x,y;
+            int x, y;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         x = (int) event.getX();
                         y = (int) event.getY();
                         break;
                     case MotionEvent.ACTION_UP:
-                        if((int)event.getX() == x && (int)event.getY()==y){
+                        if ((int) event.getX() == x && (int) event.getY() == y) {
                             //如果手指点击时 与抬起时的x y 坐标相等 那么我们认为手指点了该view
                             setBackTranslation();  //折叠菜单
-                            setRotateAnimation(ctrlButton,RECOVER_ROTATE); //旋转mainButton
+                            setRotateAnimation(ctrlButton, RECOVER_ROTATE); //旋转mainButton
                             flag = UNFOLDING;//设置为展开状态
                             //执行该view的点击事件
                             view.callOnClick();

@@ -16,14 +16,18 @@ import java.util.ListIterator;
 
 public final class LegoBundleMgr implements ILegoMgr {
 
-    private final String tag() {
-        return this.getClass().getSimpleName();
-    }
+    private final ILego lego;
+    private final LinkedHashMap<String, LegoBundle> mBundles = new LinkedHashMap<>();
+    private final ArrayList<String> mBundleNames = new ArrayList<>();
 
-    public LegoBundleMgr(@NonNull final ILego lego, @NonNull final ArrayList<String> bundles){
+    public LegoBundleMgr(@NonNull final ILego lego, @NonNull final ArrayList<String> bundles) {
         this.lego = lego;
         mBundleNames.clear();
         mBundleNames.addAll(bundles);
+    }
+
+    private final String tag() {
+        return this.getClass().getSimpleName();
     }
 
     @Override
@@ -37,7 +41,7 @@ public final class LegoBundleMgr implements ILegoMgr {
             for (String name : mBundleNames) {
                 final boolean bSuccess = loadOneBundle(name);
                 if (!bSuccess) {
-                    LogEx.e(tag(),"load bundle \"" + name +"\" failed!");
+                    LogEx.e(tag(), "load bundle \"" + name + "\" failed!");
                 }
             }
         } while (false);
@@ -54,7 +58,6 @@ public final class LegoBundleMgr implements ILegoMgr {
         }
         mBundles.clear();
     }
-
 
     @SuppressWarnings("TryWithIdenticalCatches")
     protected boolean loadOneBundle(@NonNull final String name) {
@@ -101,8 +104,4 @@ public final class LegoBundleMgr implements ILegoMgr {
         }
         return bSuccess;
     }
-
-    private final ILego lego;
-    private final LinkedHashMap<String, LegoBundle> mBundles = new LinkedHashMap<>();
-    private final ArrayList<String> mBundleNames = new ArrayList<>();
 }

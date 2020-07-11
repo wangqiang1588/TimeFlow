@@ -27,23 +27,43 @@ public class TimeFlowPersistCase extends LitePalSupport {
     @Column(nullable = false)
     private String modified; // time when case edited
 
-    public String getKey() { return key; }
+    public String getKey() {
+        return key;
+    }
 
-    public void setKey(final String k) { this.key = k; }
+    public void setKey(final String k) {
+        this.key = k;
+    }
 
-    public String getContent() { return content; }
+    public String getContent() {
+        return content;
+    }
 
-    public void setContent(String c) { this.content = c; }
+    public void setContent(String c) {
+        this.content = c;
+    }
 
-    public String getGmt() { return gmt; }
+    public String getGmt() {
+        return gmt;
+    }
 
-    public void setGmt(String t) { this.gmt = t; }
+    public void setGmt(String t) {
+        this.gmt = t;
+    }
 
-    public String getState() { return state; }
+    public String getState() {
+        return state;
+    }
 
-    public void setState(String s) { this.state = s; }
+    public void setState(String s) {
+        this.state = s;
+    }
 
-    public String getModified() { return modified; }
+    public String getModified() {
+        return modified;
+    }
 
-    public void setModified(String m) { this.modified = m; }
+    public void setModified(String m) {
+        this.modified = m;
+    }
 }

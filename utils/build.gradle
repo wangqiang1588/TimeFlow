@@ -26,7 +26,7 @@ dependencies {
     implementation rootProject.ext.depLibs.sup_appcompat_v7
 
     androidTestImplementation rootProject.ext.depLibs.espresso_core
-    
+
     // 单元测试
     testImplementation rootProject.ext.depLibs.junit
     testImplementation rootProject.ext.depLibs.robolectric

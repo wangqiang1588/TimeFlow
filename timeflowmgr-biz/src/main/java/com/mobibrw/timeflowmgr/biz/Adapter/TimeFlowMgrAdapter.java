@@ -27,6 +27,11 @@ import static com.mobibrw.persist.api.IPersistApi.TIME_FLOW_LOAD_LIMIT_NONE;
 
 public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.TFViewHolder> {
 
+    private Context ctx;
+    private LayoutInflater inflater;
+    private ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
+    private TimeFlowViewClickInterceptor clickInterceptor;
+
     public TimeFlowMgrAdapter(Context context, TimeFlowViewClickInterceptor interceptor) {
         this.ctx = context;
         this.clickInterceptor = interceptor;
@@ -36,9 +41,13 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
         timeFlowCases.addAll(tfCases);
     }
 
-    private Context getContext() { return this.ctx; }
+    private Context getContext() {
+        return this.ctx;
+    }
 
-    private LayoutInflater getInflater() { return inflater; }
+    private LayoutInflater getInflater() {
+        return inflater;
+    }
 
     public void fireTimeFlowDataSetChanged() {
         final ArrayList<TimeFlowCase> tfCases = PersistApiBu.api().loadCompleteTimeFlowCases(TIME_FLOW_LOAD_LIMIT_NONE);
@@ -68,6 +77,12 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
     //创建ViewHolder
     public static class TFViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView tvCaption;
+        private TextView tvDel;
+        private TextView tvDate;
+        private TimeFlowCase tfCase;
+        private Context ctx;
+        private TimeFlowViewClickInterceptor clickInterceptor;
         public TFViewHolder(Context c, View v, TimeFlowViewClickInterceptor interceptor) {
             super(v);
             ctx = c;
@@ -80,10 +95,10 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
                 @Override
                 public void onClick(View v) {
                     boolean fireClick = true;
-                    if(null != clickInterceptor) {
+                    if (null != clickInterceptor) {
                         fireClick = clickInterceptor.onTimeFlowCaseViewClick(v);
                     }
-                    if(fireClick) {
+                    if (fireClick) {
                         //item 点击事件
                         final Intent intent = new Intent();
                         intent.setClass(ctx, TimeFlowEditCaseActivity.class);
@@ -114,11 +129,11 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
                 final Date dt = TimeUtils.timeStampFmtToDate(modTime);
                 final boolean today = TimeUtils.isToday(dt);
                 String dtCaption = "";
-                if(today) {
+                if (today) {
                     dtCaption = "" + TimeUtils.getHourOfDay(dt) + ":" + TimeUtils.getMinute(dt) + ":" + TimeUtils.getSecond(dt);
                 } else {
                     final boolean thisYear = TimeUtils.isThisYear(dt);
-                    if(thisYear) {
+                    if (thisYear) {
                         dtCaption = "" + TimeUtils.getMonth(dt) + "/" + TimeUtils.getDayOfMonth(dt) + " " + TimeUtils.getHourOfDay(dt) + ":" + TimeUtils.getMinute(dt) + ":" + TimeUtils.getSecond(dt);
                     } else {
                         dtCaption = "" + TimeUtils.getYear(dt) + "/" + TimeUtils.getMonth(dt) + "/" + TimeUtils.getDayOfMonth(dt) + " " + TimeUtils.getHourOfDay(dt) + ":" + TimeUtils.getMinute(dt) + ":" + TimeUtils.getSecond(dt);
@@ -129,17 +144,5 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
                 e.printStackTrace();
             }
         }
-
-        private TextView tvCaption;
-        private TextView tvDel;
-        private TextView tvDate;
-        private TimeFlowCase tfCase;
-        private Context ctx;
-        private TimeFlowViewClickInterceptor clickInterceptor;
     }
-
-    private Context ctx;
-    private LayoutInflater inflater;
-    private ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
-    private TimeFlowViewClickInterceptor clickInterceptor;
 }

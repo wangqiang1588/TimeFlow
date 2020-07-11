@@ -1,8 +1,8 @@
 package com.mobibrw.timeflowmgr.biz.Activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -33,38 +33,38 @@ public class TimeFlowEditCaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_case);
-        final Button btnCommit = (Button)findViewById(R.id.btnCommit);
+        final Button btnCommit = (Button) findViewById(R.id.btnCommit);
         btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setAndSaveTimeFlowItems();
             }
         });
-        editText = (EditText)findViewById(R.id.editContent);
+        editText = (EditText) findViewById(R.id.editContent);
 
         final Intent intent = getIntent();
         final String key = intent.getStringExtra(TimeFlowEditCaseActivity.TIME_FLOW_CASE_KEY);
-        if(!TextUtils.isEmpty(key)) {
+        if (!TextUtils.isEmpty(key)) {
             timeFlowCase = PersistApiBu.api().loadTimeFlowCase(key);
             editText.setText(timeFlowCase.getContent());
         }
     }
 
-    private void setAndSaveTimeFlowItems(){
+    private void setAndSaveTimeFlowItems() {
         final String strContent = editText.getText().toString();
-        if(TextUtils.isEmpty(strContent)) {
+        if (TextUtils.isEmpty(strContent)) {
             ToastUtils.shortToast(this.getBaseContext(), R.string.warning_content_empty);
         } else {
             int tryCount = 0;
             do {
-                tryCount ++;
-                if(tryCount > MAX_TRY_COUNT) {
+                tryCount++;
+                if (tryCount > MAX_TRY_COUNT) {
                     ToastUtils.shortToast(this.getBaseContext(), R.string.warning_persist_failed);
                     break;
                 }
                 final String editTime = TimeUtils.generateTimeStamp();
                 String strKey = "";
-                if(null == timeFlowCase) {
+                if (null == timeFlowCase) {
                     strKey = HashUtils.generateSha1(editTime);
                     if (TextUtils.isEmpty(strKey)) {
                         strKey = editTime;

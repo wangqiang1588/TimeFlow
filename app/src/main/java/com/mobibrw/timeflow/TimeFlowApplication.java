@@ -18,13 +18,13 @@ public class TimeFlowApplication extends Application implements ILegoAppContext 
     private final LegoApplication legoApplication = new LegoApplication(this);
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
         legoApplication.onApplicationCreate();
     }
 
     @Override
-    public void onTerminate(){
+    public void onTerminate() {
         legoApplication.onApplicationTerminate();
         super.onTerminate();
     }

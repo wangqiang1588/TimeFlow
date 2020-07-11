@@ -9,10 +9,10 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/txtCaption"
@@ -38,8 +38,8 @@
         android:layout_height="match_parent"
         android:background="#FFF55030"
         android:gravity="center"
-        android:paddingEnd="10dp"
         android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:text="@string/delete"
         android:textColor="#FFFFFFFF"
         android:textSize="14sp" />

@@ -24,6 +24,9 @@ import java.util.List;
 
 class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPersistApi {
 
+    private final static String defaultDatabaseName = "TimeFlowBiz";
+    private final static int defaultDatabaseVer = 1;
+
     private TimeFlowCase transFromTimeFlowPersistCase(TimeFlowPersistCase persistCase) {
         final TimeFlowCase tfCase = new TimeFlowCase();
         tfCase.setKey(persistCase.getKey());
@@ -103,14 +106,14 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
     public ArrayList<TimeFlowCase> loadCompleteTimeFlowCases(final int limit) {
         final ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
         final FluentQuery fluentQuery = LitePal.order("id desc");
-        fluentQuery.max(TimeFlowPersistCase.class,"id", int.class);
+        fluentQuery.max(TimeFlowPersistCase.class, "id", int.class);
         fluentQuery.where("state=? group by key", TimeFlowPersistCase.TIME_FLOW_PERSIST_CASE_STATE_ACTIVE);
-        if(TIME_FLOW_LOAD_LIMIT_NONE != limit) {
+        if (TIME_FLOW_LOAD_LIMIT_NONE != limit) {
             fluentQuery.limit(limit);
         }
         final List<TimeFlowPersistCase> persistResCases = fluentQuery.find(TimeFlowPersistCase.class);
-        if((null != persistResCases)&& (persistResCases.size() > 0)) {
-            for(TimeFlowPersistCase persistCase : persistResCases) {
+        if ((null != persistResCases) && (persistResCases.size() > 0)) {
+            for (TimeFlowPersistCase persistCase : persistResCases) {
                 final TimeFlowCase tfCase = transFromTimeFlowPersistCase(persistCase);
                 timeFlowCases.add(tfCase);
             }
@@ -121,7 +124,7 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
     @Override
     public TimeFlowCase loadTimeFlowCase(final String key) {
         final List<TimeFlowPersistCase> persistCases = LitePal.order("id desc").where("key=?", key).limit(1).find(TimeFlowPersistCase.class);
-        if((null != persistCases)&& (persistCases.size() > 0)){
+        if ((null != persistCases) && (persistCases.size() > 0)) {
             final TimeFlowPersistCase persistCase = persistCases.get(0);
             final TimeFlowCase tfCase = transFromTimeFlowPersistCase(persistCase);
             return tfCase;
@@ -138,7 +141,4 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
     public void unRegisterPersistListener(IPersistListener l) {
         this.unRegisterListener(l);
     }
-
-    private final static String defaultDatabaseName = "TimeFlowBiz";
-    private final static int defaultDatabaseVer = 1;
 }

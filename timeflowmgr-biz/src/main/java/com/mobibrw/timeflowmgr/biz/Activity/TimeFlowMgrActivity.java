@@ -1,21 +1,20 @@
 package com.mobibrw.timeflowmgr.biz.Activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.mobibrw.persist.api.IPersistListener;
 import com.mobibrw.persist.api.PersistApiBu;
@@ -26,6 +25,9 @@ import com.mobibrw.timeflowmgr.biz.View.SlideRecyclerView;
 
 public class TimeFlowMgrActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, IPersistListener, TimeFlowViewClickInterceptor {
+
+    private TimeFlowMgrAdapter tfMgrAdapter;
+    private SlideRecyclerView slideRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,12 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Intent intent=new Intent();
+                final Intent intent = new Intent();
                 intent.setClass(TimeFlowMgrActivity.this, TimeFlowEditCaseActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-               //         .setAction("Action", null).show();
+                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //         .setAction("Action", null).show();
             }
         });
 
@@ -56,7 +58,7 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        slideRecyclerView = (SlideRecyclerView)findViewById(R.id.tfRecyclerView);
+        slideRecyclerView = (SlideRecyclerView) findViewById(R.id.tfRecyclerView);
         slideRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         //分割线
@@ -146,7 +148,4 @@ public class TimeFlowMgrActivity extends AppCompatActivity
         }
         return true;
     }
-
-    private TimeFlowMgrAdapter tfMgrAdapter;
-    private SlideRecyclerView slideRecyclerView;
 }
