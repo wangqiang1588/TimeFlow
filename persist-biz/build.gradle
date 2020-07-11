@@ -23,11 +23,26 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation rootProject.ext.depLibs.espresso_core
     implementation project(':lego')
     implementation rootProject.ext.depLibs.sup_appcompat_v7
     implementation rootProject.ext.depLibs.litepal
     implementation project(':persist-api')
     implementation project(':utils')
+    androidTestImplementation rootProject.ext.depLibs.espresso_core
+    // 单元测试
     testImplementation rootProject.ext.depLibs.junit
+    testImplementation rootProject.ext.depLibs.robolectric
+    testImplementation rootProject.ext.depLibs.robo_shadows_sup_v4
+
+    // MultiDex支持
+    testImplementation rootProject.ext.depLibs.robo_shadows_multidex
+
+    // 此处版本更新需要特别小心，目前 robolectric 跟 powermock 存在兼容问题，
+    // 需要固定的某些版本才能正常配合
+    // 依赖关系参考
+    // https://github.com/robolectric/robolectric/wiki/Using-PowerMock
+    testImplementation rootProject.ext.depLibs.powermock_junit4
+    testImplementation rootProject.ext.depLibs.powermock_junit4_rule
+    testImplementation rootProject.ext.depLibs.powermock_clzloading_xstream
+    testImplementation rootProject.ext.depLibs.powermock_api_mockito
 }
