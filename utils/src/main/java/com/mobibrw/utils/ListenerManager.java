@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
@@ -16,7 +15,7 @@ public class ListenerManager<T> {
 
     private final LinkedHashSet<EquatableWeakReference<T>> listeners = new LinkedHashSet<>();
     private final Object lock = new Object();
-    private final LinkedHashMap<RunnableEx, WeakReference<T>> runnableExs = new LinkedHashMap<>();
+    private final LinkedHashMap<RunnableEx<T>, WeakReference<T>> runnableExs = new LinkedHashMap<>();
     private final android.os.Handler mHandler = new android.os.Handler(android.os.Looper.getMainLooper());
 
     public boolean registerListener(@NonNull final T listener) {
@@ -47,9 +46,7 @@ public class ListenerManager<T> {
 
     private void cleanupDeadListener() {
         final ArrayList<EquatableWeakReference<T>> cleanupArr = new ArrayList<>();
-        final Iterator<EquatableWeakReference<T>> iterator = listeners.iterator();
-        while (iterator.hasNext()) {
-            final EquatableWeakReference<T> weak = iterator.next();
+        for (EquatableWeakReference<T> weak : listeners) {
             if (null != weak) {
                 final T strong = weak.get();
                 if (null == strong) {
@@ -64,11 +61,9 @@ public class ListenerManager<T> {
     }
 
     private void cancelPostedRunnable(@NonNull final T listener) {
-        final ArrayList<RunnableEx> runnableArr = new ArrayList<>();
-        final Iterator<LinkedHashMap.Entry<RunnableEx, WeakReference<T>>> iterator = runnableExs.entrySet().iterator();
-        while (iterator.hasNext()) {
-            final LinkedHashMap.Entry<RunnableEx, WeakReference<T>> element = iterator.next();
-            final RunnableEx rx = element.getKey();
+        final ArrayList<RunnableEx<T>> runnableArr = new ArrayList<>();
+        for (LinkedHashMap.Entry<RunnableEx<T>, WeakReference<T>> element : runnableExs.entrySet()) {
+            final RunnableEx<T> rx = element.getKey();
             if (null != rx) {
                 final WeakReference<T> weak = element.getValue();
                 if (null != weak) {
@@ -88,16 +83,14 @@ public class ListenerManager<T> {
                 }
             }
         }
-        for (Runnable r : runnableArr) {
+        for (RunnableEx<T> r : runnableArr) {
             runnableExs.remove(r);
         }
     }
 
     public void clearListener() {
         synchronized (lock) {
-            final Iterator<EquatableWeakReference<T>> iterator = listeners.iterator();
-            while (iterator.hasNext()) {
-                final EquatableWeakReference<T> listener = iterator.next();
+            for (EquatableWeakReference<T> listener : listeners) {
                 if (null != listener) {
                     final T strongListener = listener.get();
                     if (null != strongListener) {
@@ -111,23 +104,18 @@ public class ListenerManager<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void forEachListener(@NonNull final IForEachListener<T> listener) {
         final ArrayList<EquatableWeakReference<T>> cleanupArr = new ArrayList<>();
         LinkedHashSet<EquatableWeakReference<T>> cloneListeners;
         synchronized (lock) {
             cloneListeners = (LinkedHashSet<EquatableWeakReference<T>>) listeners.clone();
         }
-        final Iterator<EquatableWeakReference<T>> iterator = cloneListeners.iterator();
-        while (iterator.hasNext()) {
-            final EquatableWeakReference<T> weak = iterator.next();
+        for (EquatableWeakReference<T> weak : cloneListeners) {
             if (null != weak) {
                 final T strong = weak.get();
                 if (null != strong) {
-                    if (null != listener) {
-                        listener.onForEachListener(strong);
-                    } else {
-                        cleanupArr.add(weak);
-                    }
+                    listener.onForEachListener(strong);
                 } else {
                     cleanupArr.add(weak);
                 }
@@ -142,9 +130,9 @@ public class ListenerManager<T> {
     }
 
     public boolean postRunnable(@NonNull final T listener, @NonNull final Runnable runnable) {
-        final RunnableEx<T> runnableEx = new RunnableEx<T>(runnableExs, lock, runnable);
+        final RunnableEx<T> runnableEx = new RunnableEx<>(runnableExs, lock, runnable);
         synchronized (lock) {
-            runnableExs.put(runnableEx, new WeakReference<T>(listener));
+            runnableExs.put(runnableEx, new WeakReference<>(listener));
             if (!mHandler.post(runnableEx)) {
                 runnableExs.remove(runnableEx);
                 return false;
@@ -161,9 +149,9 @@ public class ListenerManager<T> {
 
         private final Object lock;
         private Runnable runnable;
-        private LinkedHashMap<RunnableEx, WeakReference<T>> container;
+        private LinkedHashMap<RunnableEx<T>, WeakReference<T>> container;
 
-        public RunnableEx(@NonNull final LinkedHashMap<RunnableEx, WeakReference<T>> container, @NonNull final Object criticalSection, @NonNull final Runnable runnable) {
+        public RunnableEx(@NonNull final LinkedHashMap<RunnableEx<T>, WeakReference<T>> container, @NonNull final Object criticalSection, @NonNull final Runnable runnable) {
             this.runnable = runnable;
             this.container = container;
             lock = criticalSection;
