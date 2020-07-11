@@ -28,6 +28,7 @@ dependencies {
     androidTestImplementation rootProject.ext.depLibs.espresso_core
 
     // 单元测试
+    testImplementation rootProject.ext.depLibs.android_test_runner
     testImplementation rootProject.ext.depLibs.junit
     testImplementation rootProject.ext.depLibs.robolectric
     testImplementation rootProject.ext.depLibs.robo_shadows_sup_v4

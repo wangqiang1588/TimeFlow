@@ -12,6 +12,10 @@ ext {
             espresso_core               : "com.android.support.test.espresso:espresso-core:3.0.2",
             junit                       : "junit:junit:4.13",
             litepal                     : "org.litepal.android:java:3.0.0",
+
+            // 单元测试相关
+            "android_test_runner"       : 'com.android.support.test:runner:1.0.2',
+
             robolectric                 : "org.robolectric:robolectric:${roboVer.ver}",
             // support v4
             robo_shadows_sup_v4         : "org.robolectric:shadows-supportv4:${roboVer.ver}",
