@@ -113,23 +113,27 @@ public class ListenerManager<T> {
 
     public void forEachListener(@NonNull final IForEachListener<T> listener) {
         final ArrayList<EquatableWeakReference<T>> cleanupArr = new ArrayList<>();
+        LinkedHashSet<EquatableWeakReference<T>> cloneListeners;
         synchronized (lock) {
-            final Iterator<EquatableWeakReference<T>> iterator = listeners.iterator();
-            while (iterator.hasNext()) {
-                final EquatableWeakReference<T> weak = iterator.next();
-                if (null != weak) {
-                    final T strong = weak.get();
-                    if (null != strong) {
-                        if (null != listener) {
-                            listener.onForEachListener(strong);
-                        } else {
-                            cleanupArr.add(weak);
-                        }
+            cloneListeners = (LinkedHashSet<EquatableWeakReference<T>>) listeners.clone();
+        }
+        final Iterator<EquatableWeakReference<T>> iterator = cloneListeners.iterator();
+        while (iterator.hasNext()) {
+            final EquatableWeakReference<T> weak = iterator.next();
+            if (null != weak) {
+                final T strong = weak.get();
+                if (null != strong) {
+                    if (null != listener) {
+                        listener.onForEachListener(strong);
                     } else {
                         cleanupArr.add(weak);
                     }
+                } else {
+                    cleanupArr.add(weak);
                 }
             }
+        }
+        synchronized (lock) {
             // cleanup dead listener
             for (EquatableWeakReference<T> weak : cleanupArr) {
                 listeners.remove(weak);
