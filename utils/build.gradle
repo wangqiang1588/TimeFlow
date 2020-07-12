@@ -19,6 +19,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        //命令行下 单元测试可能卡住的问题
+        unitTests.all { jvmArgs '-noverify' }
+        unitTests {
+            includeAndroidResources = true
+        }
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
