@@ -104,14 +104,13 @@ public class ListenerManager<T> {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void forEachListener(@NonNull final IForEachListener<T> listener) {
         final ArrayList<EquatableWeakReference<T>> cleanupArr = new ArrayList<>();
-        LinkedHashSet<EquatableWeakReference<T>> cloneListeners;
+        ArrayList<EquatableWeakReference<T>> listListeners;
         synchronized (lock) {
-            cloneListeners = (LinkedHashSet<EquatableWeakReference<T>>) listeners.clone();
+            listListeners = new ArrayList<>(listeners);
         }
-        for (EquatableWeakReference<T> weak : cloneListeners) {
+        for (EquatableWeakReference<T> weak : listListeners) {
             if (null != weak) {
                 final T strong = weak.get();
                 if (null != strong) {
