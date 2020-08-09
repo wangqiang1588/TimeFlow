@@ -1,7 +1,9 @@
 package com.mobibrw.lego;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Created by longsky on 17-7-6.
@@ -10,10 +12,12 @@ import android.support.annotation.NonNull;
 public class LegoApplication implements ILego {
 
     private final ILegoAppContext legoAppContext;
+    private final LegoActivityManager legoActivityManager;
     private LegoBundleMgr legoBundleMgr;
 
     public LegoApplication(@NonNull final ILegoAppContext legoAppContext) {
         this.legoAppContext = legoAppContext;
+        legoActivityManager = new LegoActivityManager(legoAppContext.getAppContext());
     }
 
     public void onApplicationCreate() {
@@ -22,6 +26,7 @@ public class LegoApplication implements ILego {
     }
 
     public void onApplicationTerminate() {
+        legoActivityManager.onApplicationTerminate();
         legoBundleMgr.onLegoApplicationTerminate();
     }
 
@@ -33,5 +38,17 @@ public class LegoApplication implements ILego {
     @Override
     public Context getLegoContext() {
         return this.legoAppContext.getAppContext();
+    }
+
+    @Nullable
+    @Override
+    public Activity getAnyActivity() {
+        return legoActivityManager.getAnyActivity();
+    }
+
+    @Nullable
+    @Override
+    public Activity getCurrentForegroundActivity() {
+        return legoActivityManager.getCurrentForegroundActivity();
     }
 }
