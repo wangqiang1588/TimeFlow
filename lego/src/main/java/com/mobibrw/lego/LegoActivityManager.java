@@ -26,7 +26,7 @@ class LegoActivityManager implements Application.ActivityLifecycleCallbacks {
     }
 
     @MainThread
-    public void onApplicationTerminate() {
+    public void onLegoApplicationTerminate() {
         application.unregisterActivityLifecycleCallbacks(this);
         activities.clear();
     }

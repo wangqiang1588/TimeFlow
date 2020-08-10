@@ -26,7 +26,7 @@ public class LegoApplication implements ILego {
     }
 
     public void onApplicationTerminate() {
-        legoActivityManager.onApplicationTerminate();
+        legoActivityManager.onLegoApplicationTerminate();
         legoBundleMgr.onLegoApplicationTerminate();
     }
 
