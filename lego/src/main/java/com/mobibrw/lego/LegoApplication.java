@@ -12,15 +12,15 @@ import android.support.annotation.Nullable;
 public class LegoApplication implements ILego {
 
     private final ILegoAppContext legoAppContext;
-    private final LegoActivityManager legoActivityManager;
+    private LegoActivityManager legoActivityManager;
     private LegoBundleMgr legoBundleMgr;
 
     public LegoApplication(@NonNull final ILegoAppContext legoAppContext) {
         this.legoAppContext = legoAppContext;
-        legoActivityManager = new LegoActivityManager(legoAppContext.getAppContext());
     }
 
     public void onApplicationCreate() {
+        legoActivityManager = new LegoActivityManager(legoAppContext.getAppContext());
         legoBundleMgr = new LegoBundleMgr(this, this.legoAppContext.getAppBundles());
         legoBundleMgr.onLegoApplicationCreate();
     }
