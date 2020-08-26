@@ -13,14 +13,14 @@ import com.mobibrw.utils.EquatableWeakReference;
 import java.lang.ref.WeakReference;
 import java.util.LinkedHashSet;
 
-class LegoActivityManager implements Application.ActivityLifecycleCallbacks {
+class LegoActivityMgr implements Application.ActivityLifecycleCallbacks {
     private final Application application;
     private final LinkedHashSet<EquatableWeakReference<Activity>> activities = new LinkedHashSet<>();
 
     private WeakReference<Activity> currentTopActivity;
 
     @MainThread
-    public LegoActivityManager(final @NonNull Context context) {
+    public LegoActivityMgr(final @NonNull Context context) {
         application = ((Application) context.getApplicationContext());
         application.registerActivityLifecycleCallbacks(this);
     }

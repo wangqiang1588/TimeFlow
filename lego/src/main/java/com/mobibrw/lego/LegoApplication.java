@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 public class LegoApplication implements ILego {
 
     private final ILegoAppContext legoAppContext;
-    private LegoActivityManager legoActivityManager;
+    private LegoActivityMgr legoActivityMgr;
     private LegoBundleMgr legoBundleMgr;
 
     public LegoApplication(@NonNull final ILegoAppContext legoAppContext) {
@@ -20,13 +20,13 @@ public class LegoApplication implements ILego {
     }
 
     public void onApplicationCreate() {
-        legoActivityManager = new LegoActivityManager(legoAppContext.getAppContext());
+        legoActivityMgr = new LegoActivityMgr(legoAppContext.getAppContext());
         legoBundleMgr = new LegoBundleMgr(this, this.legoAppContext.getAppBundles());
         legoBundleMgr.onLegoApplicationCreate();
     }
 
     public void onApplicationTerminate() {
-        legoActivityManager.onLegoApplicationTerminate();
+        legoActivityMgr.onLegoApplicationTerminate();
         legoBundleMgr.onLegoApplicationTerminate();
     }
 
@@ -43,12 +43,12 @@ public class LegoApplication implements ILego {
     @Nullable
     @Override
     public Activity getAnyActivity() {
-        return legoActivityManager.getAnyActivity();
+        return legoActivityMgr.getAnyActivity();
     }
 
     @Nullable
     @Override
     public Activity getCurrentForegroundActivity() {
-        return legoActivityManager.getCurrentForegroundActivity();
+        return legoActivityMgr.getCurrentForegroundActivity();
     }
 }
