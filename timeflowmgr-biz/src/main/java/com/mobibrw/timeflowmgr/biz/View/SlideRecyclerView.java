@@ -90,8 +90,8 @@ public class SlideRecyclerView extends RecyclerView {
                 float xVelocity = mVelocityTracker.getXVelocity();
                 float yVelocity = mVelocityTracker.getYVelocity();
                 if (Math.abs(xVelocity) > SNAP_VELOCITY && Math.abs(xVelocity) > Math.abs(yVelocity)
-                        || Math.abs(x - mFirstX) >= mTouchSlop
-                        && Math.abs(x - mFirstX) > Math.abs(y - mFirstY)) {
+                    || Math.abs(x - mFirstX) >= mTouchSlop
+                       && Math.abs(x - mFirstX) > Math.abs(y - mFirstY)) {
                     mIsSlide = true;
                     return true;
                 }
@@ -116,7 +116,7 @@ public class SlideRecyclerView extends RecyclerView {
                     if (mMenuViewWidth != INVALID_CHILD_WIDTH) {
                         float dx = mLastX - x;
                         if (mFlingView.getScrollX() + dx <= mMenuViewWidth
-                                && mFlingView.getScrollX() + dx > 0) {
+                            && mFlingView.getScrollX() + dx > 0) {
                             mFlingView.scrollBy((int) dx, 0);
                         }
                         mLastX = x;

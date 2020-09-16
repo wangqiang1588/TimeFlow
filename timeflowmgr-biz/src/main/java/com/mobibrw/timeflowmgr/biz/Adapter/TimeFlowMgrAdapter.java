@@ -83,6 +83,7 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
         private TimeFlowCase tfCase;
         private Context ctx;
         private TimeFlowViewClickInterceptor clickInterceptor;
+
         public TFViewHolder(Context c, View v, TimeFlowViewClickInterceptor interceptor) {
             super(v);
             ctx = c;
