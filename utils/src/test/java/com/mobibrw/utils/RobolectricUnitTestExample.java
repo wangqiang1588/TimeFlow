@@ -1,5 +1,6 @@
 package com.mobibrw.utils;
 
+import android.os.Build;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
@@ -20,7 +21,7 @@ import org.robolectric.shadows.ShadowLog;
  */
 @RunWith(AndroidJUnit4.class)
 @PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
-@Config(application = android.app.Application.class, manifest = Config.NONE)
+@Config(application = android.app.Application.class, manifest = Config.NONE, sdk = Build.VERSION_CODES.P)
 @PrepareForTest(Example.class)
 public class RobolectricUnitTestExample {
 
