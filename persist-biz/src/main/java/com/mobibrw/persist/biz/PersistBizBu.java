@@ -40,7 +40,7 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
     @Override
     protected void onBundleCreate(@NonNull final ILego lego) {
         LitePal.initialize(lego.getLegoContext());
-        final LitePalDB litePalDB = new LitePalDB(this.defaultDatabaseName, this.defaultDatabaseVer);
+        final LitePalDB litePalDB = new LitePalDB(defaultDatabaseName, defaultDatabaseVer);
         litePalDB.addClassName(TimeFlowPersistCase.class.getName());
         LitePal.use(litePalDB);
     }
@@ -126,8 +126,7 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
         final List<TimeFlowPersistCase> persistCases = LitePal.order("id desc").where("key=?", key).limit(1).find(TimeFlowPersistCase.class);
         if ((null != persistCases) && (persistCases.size() > 0)) {
             final TimeFlowPersistCase persistCase = persistCases.get(0);
-            final TimeFlowCase tfCase = transFromTimeFlowPersistCase(persistCase);
-            return tfCase;
+            return transFromTimeFlowPersistCase(persistCase);
         }
         return null;
     }

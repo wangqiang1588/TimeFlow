@@ -25,11 +25,10 @@ public class SlideRecyclerView extends RecyclerView {
     private static final int INVALID_POSITION = -1; // 触摸到的点不在子View范围内
     private static final int INVALID_CHILD_WIDTH = -1;  // 子ItemView不含两个子View
     private static final int SNAP_VELOCITY = 600;   // 最小滑动速度
-
+    private final int mTouchSlop; // 认为是滑动的最小距离（一般由系统提供）
+    private final Scroller mScroller;
     private VelocityTracker mVelocityTracker;   // 速度追踪器
-    private int mTouchSlop; // 认为是滑动的最小距离（一般由系统提供）
     private Rect mTouchFrame;   // 子View所在的矩形范围
-    private Scroller mScroller;
     private float mLastX;   // 滑动过程中记录上次触碰点X
     private float mFirstX, mFirstY; // 首次触碰范围
     private boolean mIsSlide;   // 是否滑动子View
@@ -220,9 +219,6 @@ public class SlideRecyclerView extends RecyclerView {
     }
 
     public boolean isMenuOpen() {
-        if (mFlingView != null && mFlingView.getScrollX() != 0) {
-            return true;
-        }
-        return false;
+        return mFlingView != null && mFlingView.getScrollX() != 0;
     }
 }

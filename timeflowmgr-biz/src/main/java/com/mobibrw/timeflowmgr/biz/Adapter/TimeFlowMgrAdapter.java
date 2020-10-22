@@ -27,10 +27,10 @@ import static com.mobibrw.persist.api.IPersistApi.TIME_FLOW_LOAD_LIMIT_NONE;
 
 public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.TFViewHolder> {
 
-    private Context ctx;
-    private LayoutInflater inflater;
-    private ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
-    private TimeFlowViewClickInterceptor clickInterceptor;
+    private final Context ctx;
+    private final LayoutInflater inflater;
+    private final ArrayList<TimeFlowCase> timeFlowCases = new ArrayList<>();
+    private final TimeFlowViewClickInterceptor clickInterceptor;
 
     public TimeFlowMgrAdapter(Context context, TimeFlowViewClickInterceptor interceptor) {
         this.ctx = context;
@@ -129,7 +129,7 @@ public class TimeFlowMgrAdapter extends RecyclerView.Adapter<TimeFlowMgrAdapter.
             try {
                 final Date dt = TimeUtils.timeStampFmtToDate(modTime);
                 final boolean today = TimeUtils.isToday(dt);
-                String dtCaption = "";
+                String dtCaption;
                 if (today) {
                     dtCaption = "" + TimeUtils.getHourOfDay(dt) + ":" + TimeUtils.getMinute(dt) + ":" + TimeUtils.getSecond(dt);
                 } else {

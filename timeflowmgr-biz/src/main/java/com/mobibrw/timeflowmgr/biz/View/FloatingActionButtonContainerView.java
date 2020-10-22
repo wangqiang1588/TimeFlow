@@ -30,12 +30,12 @@ public class FloatingActionButtonContainerView extends FrameLayout {
     private static final int UNFOLDING = 2;//菜单展开状态
     private static final int FOLDING = 3;//菜单折叠状态
 
-    private int mWidth = 400;//viewGroup的宽
-    private int mHeight = 620;//ViewGroup的高
-    private int length = 200;//子view展开的距离
+    private final int mWidth = 400;//viewGroup的宽
+    private final int mHeight = 620;//ViewGroup的高
+    private final int length = 200;//子view展开的距离
+    private final float mScale = 0.8f;//展开之后的缩放比例
+    private final int mDuration = 400;//动画时长
     private int flag = FOLDING;//菜单展开与折叠的状态
-    private float mScale = 0.8f;//展开之后的缩放比例
-    private int mDuration = 400;//动画时长
     private FloatingActionButton ctrlButton;//在Activity中显示的button
 
     public FloatingActionButtonContainerView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
@@ -135,7 +135,7 @@ public class FloatingActionButtonContainerView extends FrameLayout {
     /**
      * 设置主按钮的点击事件
      *
-     * @param view
+     * @param view view
      */
     private void setCtrlButtonListener(final View view) {
 
@@ -204,7 +204,7 @@ public class FloatingActionButtonContainerView extends FrameLayout {
     }
 
     public void setRotateAnimation(View view, int flag) {
-        ObjectAnimator rotate = null;
+        ObjectAnimator rotate;
         if (flag == DO_ROTATE)
             rotate = ObjectAnimator.ofFloat(view, "rotation", 135);
         else rotate = ObjectAnimator.ofFloat(view, "rotation", 0);
