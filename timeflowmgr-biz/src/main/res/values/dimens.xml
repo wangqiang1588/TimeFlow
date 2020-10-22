@@ -5,9 +5,10 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="nav_header_icon_size">48dp</dimen>
     <dimen name="time_item_height">72dp</dimen>
     <dimen name="time_item_margin">2dp</dimen>
-    <dimen name="time_item_fontsize">22dp</dimen>
+    <dimen name="time_item_font_size">22dp</dimen>
     <dimen name="add_item_content_min_height">100dp</dimen>
     <dimen name="default_item_margin">2dp</dimen>
     <dimen name="default_add_time_item_bottom_margin">50dp</dimen>
