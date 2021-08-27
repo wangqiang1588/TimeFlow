@@ -1,7 +1,7 @@
 package com.mobibrw.persist.api;
 
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 
 import com.mobibrw.lego.ILego;
 import com.mobibrw.lego.LegoApiBundle;

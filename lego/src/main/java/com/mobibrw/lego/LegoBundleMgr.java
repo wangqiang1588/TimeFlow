@@ -1,6 +1,6 @@
 package com.mobibrw.lego;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.mobibrw.utils.LogEx;
 

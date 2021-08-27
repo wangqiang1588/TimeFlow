@@ -7,10 +7,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.buildConf.minSdkVer
         targetSdkVersion rootProject.ext.buildConf.targetSdkVer
-        versionCode rootProject.ext.buildConf.verCode
-        versionName rootProject.ext.buildConf.verName
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
     }
     buildTypes {

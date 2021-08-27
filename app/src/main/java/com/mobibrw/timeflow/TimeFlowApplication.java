@@ -2,7 +2,7 @@ package com.mobibrw.timeflow;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.mobibrw.lego.ILegoAppContext;
 import com.mobibrw.lego.LegoApplication;

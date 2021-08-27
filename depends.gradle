@@ -4,17 +4,17 @@ ext {
     powermockVer = [ver: "1.6.6"]
     depLibs = [
             sup_v4                      : "com.android.support:support-v4:${supVer.ver}",
-            sup_appcompat_v7            : "com.android.support:appcompat-v7:${supVer.ver}",
-            sup_design                  : "com.android.support:design:${supVer.ver}",
-            sup_annotations             : "com.android.support:support-annotations:${supVer.ver}",
-            sup_recyclerview_v7         : "com.android.support:recyclerview-v7:${supVer.ver}",
-            sup_constraint_layout       : "com.android.support.constraint:constraint-layout:1.1.3",
-            espresso_core               : "com.android.support.test.espresso:espresso-core:3.0.2",
+            sup_appcompat_v7            : 'androidx.appcompat:appcompat:1.0.0',
+            sup_design                  : 'com.google.android.material:material:1.0.0',
+            sup_annotations             : 'androidx.annotation:annotation:1.0.0',
+            sup_recyclerview_v7         : 'androidx.recyclerview:recyclerview:1.0.0',
+            sup_constraint_layout       : 'androidx.constraintlayout:constraintlayout:1.1.3',
+            espresso_core               : 'androidx.test.espresso:espresso-core:3.1.0',
             junit                       : "junit:junit:4.13",
             litepal                     : "org.litepal.android:java:3.0.0",
 
             // 单元测试相关
-            "android_test_runner"       : 'com.android.support.test:runner:1.0.2',
+            "android_test_runner"       : 'androidx.test.ext:junit:1.1.1',
 
             robolectric                 : "org.robolectric:robolectric:${roboVer.ver}",
             // support v4
