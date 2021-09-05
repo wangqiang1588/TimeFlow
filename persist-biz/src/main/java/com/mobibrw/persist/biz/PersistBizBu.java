@@ -137,7 +137,7 @@ class PersistBizBu extends SimpleLegoBizBundle<IPersistListener> implements IPer
     }
 
     @Override
-    public void unRegisterPersistListener(IPersistListener l) {
-        this.unRegisterListener(l);
+    public void unregisterPersistListener(IPersistListener l) {
+        this.unregisterListener(l);
     }
 }

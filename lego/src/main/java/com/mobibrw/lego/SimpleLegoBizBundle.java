@@ -22,8 +22,8 @@ abstract public class SimpleLegoBizBundle<T> extends LegoBizBundle {
         return listenersManager.registerListener(listener);
     }
 
-    protected boolean unRegisterListener(@NonNull final T listener) {
-        return listenersManager.unRegisterListener(listener);
+    protected boolean unregisterListener(@NonNull final T listener) {
+        return listenersManager.unregisterListener(listener);
     }
 
     protected void forEachLegoListener(@NonNull final ListenerManager.IForEachListener<T> listener) {

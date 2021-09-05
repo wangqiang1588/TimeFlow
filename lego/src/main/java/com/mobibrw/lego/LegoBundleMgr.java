@@ -26,25 +26,22 @@ public final class LegoBundleMgr implements ILegoMgr {
         mBundleNames.addAll(bundles);
     }
 
-    private final String tag() {
+    private String tag() {
         return this.getClass().getSimpleName();
     }
 
     @Override
     public LegoBundle getBundle(@NonNull final String name) {
-        final LegoBundle legoBundle = mBundles.get(name);
-        return legoBundle;
+        return mBundles.get(name);
     }
 
     public void onLegoApplicationCreate() {
-        do {
-            for (String name : mBundleNames) {
-                final boolean bSuccess = loadOneBundle(name);
-                if (!bSuccess) {
-                    LogEx.e(tag(), "load bundle \"" + name + "\" failed!");
-                }
+        for (String name : mBundleNames) {
+            final boolean bSuccess = loadOneBundle(name);
+            if (!bSuccess) {
+                LogEx.e(tag(), "load bundle \"" + name + "\" failed!");
             }
-        } while (false);
+        }
     }
 
     public void onLegoApplicationTerminate() {

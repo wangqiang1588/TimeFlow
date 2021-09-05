@@ -136,7 +136,7 @@ public class TimeFlowMgrActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
-        PersistApiBu.api().unRegisterPersistListener(this);
+        PersistApiBu.api().unregisterPersistListener(this);
         super.onDestroy();
     }
 

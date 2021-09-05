@@ -23,5 +23,5 @@ public interface IPersistApi {
 
     boolean registerPersistListener(final IPersistListener l);
 
-    void unRegisterPersistListener(final IPersistListener l);
+    void unregisterPersistListener(final IPersistListener l);
 }

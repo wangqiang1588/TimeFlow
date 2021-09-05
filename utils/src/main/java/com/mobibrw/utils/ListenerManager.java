@@ -31,7 +31,7 @@ public class ListenerManager<T> {
         return true;
     }
 
-    public boolean unRegisterListener(@NonNull final T listener) {
+    public boolean unregisterListener(@NonNull final T listener) {
         final EquatableWeakReference<T> equatableWeakListener = new EquatableWeakReference<>(listener);
         synchronized (lock) {
             if (!listeners.contains(equatableWeakListener)) {
@@ -147,8 +147,8 @@ public class ListenerManager<T> {
     private static final class RunnableEx<T> implements Runnable {
 
         private final Object lock;
-        private Runnable runnable;
-        private LinkedHashMap<RunnableEx<T>, WeakReference<T>> container;
+        private final Runnable runnable;
+        private final LinkedHashMap<RunnableEx<T>, WeakReference<T>> container;
 
         public RunnableEx(@NonNull final LinkedHashMap<RunnableEx<T>, WeakReference<T>> container, @NonNull final Object criticalSection, @NonNull final Runnable runnable) {
             this.runnable = runnable;
