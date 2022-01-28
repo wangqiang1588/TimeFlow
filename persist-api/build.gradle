@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.buildConf.compSdkVer
-    buildToolsVersion rootProject.ext.buildConf.buildToolsVer
+    compileSdkVersion rootProject.ext.buildCfgs.compSdkVer
 
     defaultConfig {
-        minSdkVersion rootProject.ext.buildConf.minSdkVer
-        targetSdkVersion rootProject.ext.buildConf.targetSdkVer
+        minSdkVersion rootProject.ext.buildCfgs.minSdkVer
+        targetSdkVersion rootProject.ext.buildCfgs.targetSdkVer
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -23,6 +22,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation rootProject.ext.depLibs.espresso_core
     implementation project(':lego')
-    implementation rootProject.ext.depLibs.sup_appcompat_v7
+    implementation rootProject.ext.depLibs.sup_appcompat
     testImplementation rootProject.ext.depLibs.junit
 }

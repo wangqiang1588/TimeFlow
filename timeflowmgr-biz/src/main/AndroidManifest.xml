@@ -9,13 +9,16 @@
             android:name=".Activity.TimeFlowMgrActivity"
             android:label="@string/timeflowmgr_biz_name"
             android:launchMode="singleInstance"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.TimeFlowEditCaseActivity">
+        <activity
+            android:exported="false"
+            android:name=".Activity.TimeFlowEditCaseActivity">
             <intent-filter>
                 <action android:name="com.mobibrw.timeflowmgr.biz.action.Activity.TimeFlowAddItemActivity" />
             </intent-filter>

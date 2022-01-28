@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.buildConf.compSdkVer
-    buildToolsVersion rootProject.ext.buildConf.buildToolsVer
+    compileSdkVersion rootProject.ext.buildCfgs.compSdkVer
 
     defaultConfig {
-        minSdkVersion rootProject.ext.buildConf.minSdkVer
-        targetSdkVersion rootProject.ext.buildConf.targetSdkVer
+        minSdkVersion rootProject.ext.buildCfgs.minSdkVer
+        targetSdkVersion rootProject.ext.buildCfgs.targetSdkVer
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -22,7 +21,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':lego')
-    implementation rootProject.ext.depLibs.sup_appcompat_v7
+    implementation rootProject.ext.depLibs.sup_appcompat
     implementation rootProject.ext.depLibs.litepal
     implementation project(':persist-api')
     implementation project(':utils')

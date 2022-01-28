@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.buildConf.compSdkVer
-    buildToolsVersion rootProject.ext.buildConf.buildToolsVer
+    compileSdkVersion rootProject.ext.buildCfgs.compSdkVer
 
     defaultConfig {
-        minSdkVersion rootProject.ext.buildConf.minSdkVer
-        targetSdkVersion rootProject.ext.buildConf.targetSdkVer
+        minSdkVersion rootProject.ext.buildCfgs.minSdkVer
+        targetSdkVersion rootProject.ext.buildCfgs.targetSdkVer
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -32,10 +31,10 @@ dependencies {
     implementation project(':res-biz')
     implementation project(':persist-api')
     implementation project(':utils')
-    implementation rootProject.ext.depLibs.sup_appcompat_v7
+    implementation rootProject.ext.depLibs.sup_appcompat
     implementation rootProject.ext.depLibs.sup_design
     implementation rootProject.ext.depLibs.sup_constraint_layout
-    implementation rootProject.ext.depLibs.sup_recyclerview_v7
+    implementation rootProject.ext.depLibs.sup_recyclerview
 
     androidTestImplementation rootProject.ext.depLibs.espresso_core
     // 单元测试

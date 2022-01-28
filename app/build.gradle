@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.buildConf.compSdkVer
-    buildToolsVersion rootProject.ext.buildConf.buildToolsVer
+    compileSdkVersion rootProject.ext.buildCfgs.compSdkVer
 
     defaultConfig {
         applicationId "com.mobibrw.timeflow"
-        minSdkVersion rootProject.ext.buildConf.minSdkVer
-        targetSdkVersion rootProject.ext.buildConf.targetSdkVer
-        versionCode rootProject.ext.buildConf.verCode
-        versionName rootProject.ext.buildConf.verName
+        minSdkVersion rootProject.ext.buildCfgs.minSdkVer
+        targetSdkVersion rootProject.ext.buildCfgs.targetSdkVer
+        versionCode rootProject.ext.buildCfgs.verCode
+        versionName rootProject.ext.buildCfgs.verName
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }

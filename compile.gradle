@@ -1,5 +1,5 @@
 ext {
-    buildConf = [
+    buildCfgs = [
             // 编译SDK的版本
             compSdkVer   : 30,
             // build tools的版本
